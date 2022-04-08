@@ -6,9 +6,11 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "server": "yarn workspace @repo/server"
+    "server": "yarn workspace @repo/server",
+    "configs": "yarn workspace @repo/configs"
   }
 }
