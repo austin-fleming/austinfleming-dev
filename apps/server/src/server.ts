@@ -2,7 +2,7 @@ import express = require("express");
 
 const API_ROOT = "/api/v1";
 const HOST = "http://localhost";
-const PORT = 431;
+const PORT = 443;
 
 const app = express();
 
