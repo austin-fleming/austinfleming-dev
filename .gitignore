@@ -17,6 +17,7 @@ node_modules/
 
 # SYSTEM
 .DS_Store
+*.pem
 
 # LINTING
 .eslintcache
@@ -30,3 +31,6 @@ yarn-error.log*
 
 # TESTING
 /coverage
+
+# TYPESCRIPT
+*.tsbuildinfo
