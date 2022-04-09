@@ -1,6 +1,7 @@
 import express = require("express");
 
 const API_ROOT = "/api/v1";
+const HOST = "http://localhost";
 const PORT = 431;
 
 const app = express();
@@ -10,7 +11,7 @@ app.get(`${API_ROOT}/ping`, (request, response, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on ${HOST}:${PORT}`);
 });
 
 export default app;

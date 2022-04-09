@@ -7,9 +7,11 @@
     "build": "esbuild --bundle --platform=node src/server.ts --outfile=dist/server.js --external:express",
     "build:production": "yarn build --minify",
     "build:development": "yarn build --sourcemap",
+    "serve": "node ./dist/server.js",
     "dev": "nodemon",
     "audit": "audit",
-    "test": "echo \"No tests written yet!\" && exit 1"
+    "test": "echo \"No tests written yet!\" && exit 1",
+    "docker": "docker build . -t austinfleming-server"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
