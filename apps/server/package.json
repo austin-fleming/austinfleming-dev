@@ -4,7 +4,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "esbuild --bundle --platform=node --outfile=dist/server.js --external:express",
+    "build": "esbuild --bundle --platform=node src/server.ts --outfile=dist/server.js --external:express",
     "build:production": "yarn build --minify",
     "build:development": "yarn build --sourcemap",
     "dev": "nodemon",
