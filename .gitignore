@@ -34,3 +34,6 @@ yarn-error.log*
 
 # TYPESCRIPT
 *.tsbuildinfo
+
+# OLD STUFF
+__deprecated__
