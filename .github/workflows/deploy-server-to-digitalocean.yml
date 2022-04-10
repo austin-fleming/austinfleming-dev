@@ -8,6 +8,7 @@ on:
 env:
   IMAGE_NAME: api-server
   IMAGE_TAG: ${{ github.sha }}
+  REGISTRY: ghcr.io
 
 jobs:
   push_to_ghcr:
@@ -15,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Push to package registry
         uses: elgohr/Publish-Docker-Github-Action@v4
@@ -23,65 +24,38 @@ jobs:
           name: ${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
-          registry: ghcr.io
-          dockerfile: ./apps/server/Dockerfile
-# name: Build and Deploy server to Digitalocean
+          registry: ${{ env.REGISTRY }}
+          workdir: ./apps/server
 
-# on:
-#   push:
-#     branches: [main]
-#   workflow_dispatch:
+  deploy_to_digitalocean:
+    name: Deploy container to Digitalocean
+    needs: [push_to_ghcr]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable ssh
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_KEY }}
 
-# env:
-#   REGISTRY: docker.pkg.github.com
-#   REPOSITORY: austin-fleming/austinfleming-dev/api-server-image
-#   CONTAINER: api-server-image
+      - name: Add known host
+        run: ssh-keyscan -H ${{ secrets.DO_SSH_HOST }} >> ~/.ssh/known_hosts
 
-# jobs:
-#   push_to_gh_registry:
-#     name: Push container to GH Packages
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: check out repo
-#         uses: actions/checkout@v3
+      - name: Log into GH package registry
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GHCR_PAT }}"
 
-#       - name: push to package registry
-#         uses: docker/build-push-action@v1
-#         with:
-#           password: ${{ secrets.GITHUB_TOKEN }}
-#           registry: ${{ env.REGISTRY }}
-#           repository: ${{ env.REPOSITORY }}
-#           tag_with_ref: true
-#           username: ${{ github.actor }}
+      - name: Pull new container
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker pull ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
-#   deploy_to_digitalocean:
-#     name: Deploy container to digitalocean
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Enable ssh
-#         uses: webfactory/ssh-agent@v0.5.4
-#         with:
-#           ssh-private-key: ${{ secrets.DO_SSH_KEY }}
+      - name: Hault deployed container
+        continue-on-error: true
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker stop ${{ env.IMAGE_NAME }}"
 
-#       - name: Add known host
-#         run: ssh-keyscan -H ${{ secrets.DO_SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Delete deployed container
+        continue-on-error: true
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker rm ${{ env.IMAGE_NAME }}"
 
-#       - name: Log into GH package registry
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker login ${{ env.REGISTRY }} -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}"
+      - name: Start new container
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker run -p ${{ secrets.SERVER_PORT }}:${{ secrets.SERVER_PORT }} -d --name=${{ env.IMAGE_NAME }} ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
-#       - name: Pull new container
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker pull ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest"
-
-#       - name: Hault deployed container
-#         continue-on-error: true
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker stop ${{ env.CONTAINER }}"
-
-#       - name: Delete deployed container
-#         continue-on-error: true
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker rm ${{ env.CONTAINER }}"
-
-#       - name: Start new container
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST} } "docker run -p ${{ secrets.SERVER_PORT }}:${{ secrets.SERVER_PORT }} -d --name=${{ env.CONTAINER }} ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:latest"
-
-#       - name: Log out from GH package registry
-#         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker logout ${{ env.REGISTRY }}"
+      - name: Log out from GH package registry
+        run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker logout ${{ env.REGISTRY }}"
