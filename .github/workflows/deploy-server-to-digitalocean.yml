@@ -54,6 +54,7 @@ jobs:
         continue-on-error: true
         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker rm ${{ env.IMAGE_NAME }}"
 
+      #TODO: This should be more sophisticated. At the very least, it needs a --restart flag to ensure it recovers from exceptions.
       - name: Start new container
         run: ssh ${{ secrets.DO_SSH_USER }}@${{ secrets.DO_SSH_HOST }} "docker run -p ${{ secrets.SERVER_PORT }}:${{ secrets.SERVER_PORT }} -d --name=${{ env.IMAGE_NAME }} ${{ env.REGISTRY }}/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}"
 
