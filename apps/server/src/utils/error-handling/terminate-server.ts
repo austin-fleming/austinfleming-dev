@@ -39,8 +39,11 @@ export const terminateServer = (
   /* eslint-enable unicorn/no-process-exit */
 
   return (code: number, reason: string) => (error: Error) => {
-    console.log(`\n${reason} detected`);
-    console.log(code === 0 ? "Shutting down server..." : "Crashing server...");
+    console.log(
+      `\n${reason} detected :: ${
+        code === 0 ? "Shutting down" : "Aborting"
+      } server`
+    );
 
     // TODO: needs to catch other error types that will be added
     if (error && error instanceof Error) {

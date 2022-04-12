@@ -1,12 +1,17 @@
 import express = require("express");
 import type { Server as HttpServer } from "node:http";
 import { terminateServer } from "./utils/error-handling/terminate-server";
+import corsMiddleware from "./middleware/cors.middleware";
+import securityHeadersMiddleware from "./middleware/security-headers.middleware";
 
 const API_ROOT = "/api/v1";
 const HOST = "http://localhost";
 const PORT = 443;
 
 const app = express();
+
+app.use(corsMiddleware);
+app.use(securityHeadersMiddleware);
 
 app.get(`${API_ROOT}/ping`, (request, response, next) => {
   response.status(200).json({ health_status: "OK" });
