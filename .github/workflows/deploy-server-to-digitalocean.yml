@@ -41,7 +41,7 @@ jobs:
       - name: Build image and push
         uses: docker/build-push-action@v2
         with:
-          context: ./src/apps/server
+          context: ./apps/server
           tags: ghcr.io/${{ github.repository }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           push: true
 
