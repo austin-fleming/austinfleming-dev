@@ -3,6 +3,7 @@ name: Build and Deploy server to Digitalocean
 on:
   push:
     branches: [main]
+    paths: ["apps/server/**/*"]
   workflow_dispatch:
 
 env:
