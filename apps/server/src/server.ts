@@ -42,6 +42,10 @@ const startServer = () => {
     );
   });
 
+  app.post('/login', (request, response) => {
+    
+  })
+
   const exitHandler = terminateServer(server);
   process
     .on("SIGINT", exitHandler(0, "SIGINT"))

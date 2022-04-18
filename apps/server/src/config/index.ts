@@ -1,23 +1,8 @@
-interface IGlobalConfig {
-  cors: {
-    origins: string[];
-  };
-  server: {
-    apiRoot: string;
-    host: string;
-    port: number;
-  };
-}
+import "dotenv/config";
+import { authConfig } from "./auth-config";
+import { serverConfig } from "./server-config";
 
-const config: IGlobalConfig = {
-  cors: {
-    origins: ["*"],
-  },
-  server: {
-    apiRoot: "/api/v1",
-    host: "http://localhost",
-    port: 443,
-  },
+export default {
+  authConfig,
+  serverConfig,
 };
-
-export default config;

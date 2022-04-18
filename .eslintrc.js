@@ -38,12 +38,21 @@ module.exports = {
   plugins: ["@typescript-eslint", "sort-keys-fix", "typescript-sort-keys", "sonarjs", "unicorn", "no-unsanitized", "security"],
   root: true,
   rules: {
+    "@typescript-eslint/consistent-type-imports": "error",
     "sort-keys": ["error", "asc", { "caseSensitive": true, "natural": true }],
     "sort-keys-fix/sort-keys-fix": "warn",
     "unicorn/no-array-callback-reference": 'off',
     "unicorn/no-array-reduce": "warn",
     "unicorn/no-null": "warn",
     "unicorn/prefer-module": "off",
-    "unicorn/prefer-object-from-entries": "off"
+    "unicorn/prefer-object-from-entries": "off",
+    "unicorn/prevent-abbreviations": [
+      "error",
+      {
+        "allowList": {
+          "fn": true
+        }
+      }
+    ]
   },
 };
