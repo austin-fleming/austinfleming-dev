@@ -10,7 +10,8 @@
     "packages/*"
   ],
   "scripts": {
-    "server": "yarn workspace @repo/server"
+    "server": "yarn workspace @repo/server",
+    "web": "yarn workspace @repo/web"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
