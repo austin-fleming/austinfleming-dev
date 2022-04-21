@@ -1,0 +1,15 @@
+@import './colors.css';
+@import './loadingBug.css';
+@import './layout.css';
+
+* {
+  @apply text-primary;
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply bg-background;
+}

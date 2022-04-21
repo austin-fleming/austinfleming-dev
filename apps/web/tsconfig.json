@@ -18,6 +18,23 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"target": "es2020"
+		"target": "es2020",
+		"paths": {
+			"$config/*": [
+				"src/config/*"
+			],
+			"$lib": [
+				"src/lib"
+			],
+			"$lib/*": [
+				"src/lib/*"
+			],
+			"$modules/*": [
+				"src/modules/*"
+			],
+			"$styles/*": [
+				"src/styles/*"
+			]
+		}
 	}
 }

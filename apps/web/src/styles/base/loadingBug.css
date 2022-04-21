@@ -1,0 +1,5 @@
+/* NOTE: avoid chrome's "popping" during load.  */
+
+body.loading * {
+  transition: none !important;
+}
