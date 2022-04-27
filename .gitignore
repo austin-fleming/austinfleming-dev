@@ -30,10 +30,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # TESTING
-/coverage
+coverage
 
 # TYPESCRIPT
 *.tsbuildinfo
+
+# REDIS
+*.rdb
 
 # OLD STUFF
 __deprecated__

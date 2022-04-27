@@ -1,3 +1,6 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
+
 module.exports = {
   content: ["src/**/*.{html,js,svelte,ts}"],
   theme: {
@@ -37,6 +40,10 @@ module.exports = {
           },
         },
       },
+      fontFamily: {
+        'sans': ['Manrope', ...defaultTheme.fontFamily.sans]
+      },
+
       maxWidth: {
         container: `var(--l-max-content-width)`,
         'container-narrow': `var(--l-max-content-width--narrow)`,
@@ -55,7 +62,17 @@ module.exports = {
         overlay: 8000,
         modal: 9000,
       },
+      typography: {
+        'DEFAULT': {
+          css: {
+            video: {
+              marginTop: '0',
+              marginBottom: '0'
+            }
+          }
+        }
+      }
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }

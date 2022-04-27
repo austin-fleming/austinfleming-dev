@@ -17,6 +17,8 @@
     "editor.formatOnSave": true,
   },
   "cSpell.words": [
+    "casestudies",
+    "Casestudy",
     "cloin",
     "Falsyable",
     "Postgrest",
@@ -25,6 +27,8 @@
     "sveltejs",
     "tailwindcss",
     "timestamptz",
+    "Usecase",
+    "Usecases",
     "VITE"
   ],
   "[sql]": {

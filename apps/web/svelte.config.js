@@ -12,11 +12,15 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		vite: {
+			define: {
+				'process.env': process.env,
+			},
 			resolve: {
 				alias: {
 					'$config': path.resolve('./src/config'),
 					'$modules': path.resolve('./src/modules'),
-					'$styles': path.resolve('./src/styles')
+					'$styles': path.resolve('./src/styles'),
+					'$utils': path.resolve('./src/utils'),
 				}
 			}
 		}

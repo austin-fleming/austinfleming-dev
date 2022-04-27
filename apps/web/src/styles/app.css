@@ -1,4 +1,17 @@
+@import './vendors/vime-player.css';
+
 @import './base/base.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* TODO: import here or document head? */
+@layer base {
+	@font-face {
+		font-family: 'Manrope';
+		font-style: 'normal';
+		font-weight: 200 800;
+		font-display: optional;
+		src: url(/fonts/manrope-variable.woff2) format('woff2');
+	}
+}
