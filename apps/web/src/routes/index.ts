@@ -1,13 +1,14 @@
-import { casestudyUsecases } from '$modules/shared/infra/usecases/casestudy-usecases';
-import type { CaseStudy } from '$modules/shared/models/case-study';
+import type { HomePage } from '$modules/portfolio/infra/models/home-page';
+import { pageService } from '$modules/portfolio/infra/services/page.service';
 import type { RequestHandler } from '@sveltejs/kit';
 
 type Parameters = { slug: string };
-type Output = { body: { casestudies: CaseStudy[] }; status: 200 } | { status: 404 };
+type Output = { body: { homePage: HomePage }; status: 200 } | { status: 404 };
 
-const makeSuccessResponse = (casestudies: CaseStudy[]) => ({
+// TODO: make responses DRY
+const makeSuccessResponse = (homePage: HomePage) => ({
 	body: {
-		casestudies
+		homePage
 	},
 	status: 200
 });
@@ -17,7 +18,7 @@ const makeFailureResponse = () => ({
 });
 
 export const get: RequestHandler<Parameters, Output> = async () => {
-	const maybeCasestudy = await casestudyUsecases.getPaginated();
+	const maybeHomePage = await pageService.getHomePage();
 
-	return maybeCasestudy.match(makeSuccessResponse, makeFailureResponse);
+	return maybeHomePage.match(makeSuccessResponse, makeFailureResponse);
 };

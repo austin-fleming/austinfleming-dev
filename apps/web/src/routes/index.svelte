@@ -1,22 +1,20 @@
 <script lang="ts">
-	import Image from '$modules/shared/components/image.svelte';
-	import type { Casestudy } from '$modules/shared/infra/models/casestudy';
+	import CasestudyPreviewSlider from '$modules/portfolio/components/casestudies/casestudy-preview-slider.svelte';
+	import type { HomePage } from '$modules/portfolio/infra/models/home-page';
 
-	export let casestudies: Casestudy[];
+	export let homePage: HomePage;
 </script>
 
 <section class="w-full h-screen p-4">
-	<div class="w-full h-full bg-teal-300 rounded-xl" />
+	<div class="hero-root w-full h-full rounded-xl" />
 </section>
 
 <section>
-	{#each casestudies as casestudy (casestudy.id)}
-		<article>
-			<h1>{casestudy.title}</h1>
-
-			<figure>
-				<img src={casestudy.featuredImage.url} alt={casestudy.featuredImage.alt} />
-			</figure>
-		</article>
-	{/each}
+	<CasestudyPreviewSlider casestudies={homePage.casestudies} />
 </section>
+
+<style>
+	.hero-root {
+		background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+	}
+</style>

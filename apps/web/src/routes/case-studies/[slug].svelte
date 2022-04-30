@@ -1,13 +1,18 @@
-<script lang="ts">
-	// import { buildArticleJsonLd } from '$modules/shared/components/seo/build-json-ld';
+<script context="module">
+	export const prerender = false;
+</script>
 
-	// import Seo from '$modules/shared/components/seo/seo.svelte';
-	// import { serializeJsonLd } from '$modules/shared/components/seo/serialize-json-ld';
-	import ArticlePortableText from '$modules/shared/components/portable-text/article-portable-text.svelte';
-	import SimplePortableText from '$modules/shared/components/portable-text/simple-portable-text.svelte';
-	import VideoPlayer from '$modules/shared/components/video-player/video-player.svelte';
-	// import VideoPlayer from '$modules/shared/components/video-player/video-player.svelte';
-	import type { Casestudy } from '$modules/shared/infra/models/casestudy';
+<script lang="ts">
+	// import { buildArticleJsonLd } from '$modules/portfolio/components/seo/build-json-ld';
+
+	// import Seo from '$modules/portfolio/components/seo/seo.svelte';
+	// import { serializeJsonLd } from '$modules/portfolio/components/seo/serialize-json-ld';
+	import Chip from '$modules/common/components/chip/chip.svelte';
+	import ArticlePortableText from '$modules/portfolio/components/portable-text/article-portable-text.svelte';
+	import SimplePortableText from '$modules/portfolio/components/portable-text/simple-portable-text.svelte';
+	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
+	// import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
+	import type { Casestudy } from '$modules/portfolio/infra/models/casestudy';
 
 	export let casestudy: Casestudy;
 </script>
@@ -32,56 +37,56 @@
 	)} -->
 </svelte:head>
 
-<article class="max-w-5xl w-full mx-auto">
-	<header>
-		<h1 class="text-6xl font-bold">{casestudy.title}</h1>
+<article class="w-full mx-auto px-48">
+	<header class="w-full max-w-[1400px] mx-auto flex flex-col gap-48 justify-between">
+		<div class="mt-48 flex flex-col gap-6">
+			<h1 class="text-8xl font-bold mb-12 w-full max-w-[80%]">{casestudy.title}</h1>
 
-		<div class="prose">
-			<SimplePortableText blocks={casestudy.summary} />
+			<ul class="flex flex-row gap-4">
+				{#each casestudy.tags as { title, slug, seo, id } (id)}
+					<li>
+						<Chip size="sm">{title}</Chip>
+					</li>
+				{/each}
+			</ul>
+
+			<div class="prose">
+				<SimplePortableText blocks={casestudy.summary} />
+			</div>
 		</div>
 
-		<ul class="flex flex-row gap-4">
-			{#each casestudy.tags as { title, slug, seo, id } (id)}
-				<li class="bg-slate-300 p-[0.5em]">{title}</li>
-			{/each}
-		</ul>
+		<div>
+			{#if casestudy.featuredVideo}
+				<VideoPlayer
+					videoData={{
+						title: casestudy.featuredVideo.title,
+						hlsSource: casestudy.featuredVideo.hlsPlaybackUrl,
+						posterUrl: casestudy.featuredVideo.thumbnailUrl,
+						aspectRatio: casestudy.featuredVideo.aspectRatio,
+						attribution: casestudy.featuredVideo.attribution,
+						caption: casestudy.featuredVideo.caption
+					}}
+				/>
+			{:else}
+				<img src={casestudy.featuredImage.url} alt={casestudy.featuredImage.alt} />
+			{/if}
+		</div>
 	</header>
 
 	{#if casestudy.projectDetails}
-		<section id="project-details">
-			<h2 class="text-sm font-bold">Details</h2>
-
-			<div class="flex flex-row gap-4">
-				{#each casestudy.projectDetails as { title, description } (title)}
-					<div>
-						<p class="font-bold">{title}</p>
-						<div class="prose prose-sm">
-							<SimplePortableText blocks={description} />
-						</div>
+		<section id="project-details" class="w-full max-w-6xl mx-auto">
+			{#each casestudy.projectDetails as { title, description } (title)}
+				<div>
+					<p class="font-bold">{title}</p>
+					<div class="prose prose-sm">
+						<SimplePortableText blocks={description} />
 					</div>
-				{/each}
-			</div>
+				</div>
+			{/each}
 		</section>
 	{/if}
 
-	<section>
-		{#if casestudy.featuredVideo}
-			<VideoPlayer
-				videoData={{
-					title: casestudy.featuredVideo.title,
-					hlsSource: casestudy.featuredVideo.hlsPlaybackUrl,
-					posterUrl: casestudy.featuredVideo.thumbnailUrl,
-					aspectRatio: casestudy.featuredVideo.aspectRatio,
-					attribution: casestudy.featuredVideo.attribution,
-					caption: casestudy.featuredVideo.caption
-				}}
-			/>
-		{/if}
-
-		<img src={casestudy.featuredImage.url} alt={casestudy.featuredImage.alt} />
-	</section>
-
-	<section class="prose">
+	<section class="w-full max-w-container-narrow prose prose-lg mx-auto">
 		<ArticlePortableText blocks={casestudy.body} />
 	</section>
 </article>

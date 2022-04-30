@@ -17,7 +17,11 @@ export const navigationConfig: NavigationConfig = {
 		},
 		{
 			label: 'work',
-			to: '/work'
+			to: '/case-studies'
+		},
+		{
+			label: 'snippets',
+			to: '/snippets'
 		},
 		{
 			label: 'contact',

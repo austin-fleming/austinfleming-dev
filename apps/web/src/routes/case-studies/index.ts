@@ -3,11 +3,11 @@ import { casestudyUsecases } from '$modules/portfolio/infra/services/casestudy.s
 import type { RequestHandler } from '@sveltejs/kit';
 
 type Parameters = { slug: string };
-type Output = { body: { casestudy: Casestudy }; status: 200 } | { status: 404 };
+type Output = { body: { casestudies: Casestudy[] }; status: 200 } | { status: 404 };
 
-const makeSuccessResponse = (casestudy: Casestudy) => ({
+const makeSuccessResponse = (casestudies: Casestudy[]) => ({
 	body: {
-		casestudy
+		casestudies
 	},
 	status: 200
 });
@@ -16,8 +16,8 @@ const makeFailureResponse = () => ({
 	status: 404
 });
 
-export const get: RequestHandler<Parameters, Output> = async ({ params }) => {
-	const maybeCasestudy = await casestudyUsecases.getBySlug(params.slug);
+export const get: RequestHandler<Parameters, Output> = async () => {
+	const maybeCasestudy = await casestudyUsecases.getPaginated();
 
 	return maybeCasestudy.match(makeSuccessResponse, makeFailureResponse);
 };

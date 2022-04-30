@@ -2,14 +2,15 @@
 @import './loadingBug.css';
 @import './layout.css';
 
-* {
-  @apply text-primary;
+html,
+body {
+	@apply text-primary;
 }
 
 html {
-  @apply scroll-smooth;
 }
 
 body {
-  @apply bg-background;
+	@apply scroll-smooth;
+	@apply bg-background;
 }
