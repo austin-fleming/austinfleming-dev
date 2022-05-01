@@ -2,7 +2,7 @@
 VALUE OBJECTS
 */
 
-import { siteMetadataConfig } from '$config/site-metadata-config';
+import { siteMetadataConfig } from '$config/site-metadata.config';
 import type { CasestudyDTO } from '../dtos/casestudy.dto';
 import type { Casestudy } from '../models/casestudy';
 import type { ArticleSEO } from '../models/fragments/article-seo';

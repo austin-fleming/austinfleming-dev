@@ -54,7 +54,7 @@
 	}
 
 	.modalContent {
-		@apply relative w-full h-full bg-background rounded-2xl flex flex-col justify-center items-center px-[10%] py-[10%] z-10;
+		@apply relative w-full h-full bg-background rounded-2xl flex flex-col justify-center items-center p-8 z-10;
 		/* @apply translate-y-[100vh]; */
 		@apply animate-[modalContentSlide_0.3s_ease-in-out_forwards];
 	}

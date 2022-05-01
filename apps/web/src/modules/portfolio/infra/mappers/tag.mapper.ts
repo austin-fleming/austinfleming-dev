@@ -1,4 +1,4 @@
-import { siteMetadataConfig } from '$config/site-metadata-config';
+import { siteMetadataConfig } from '$config/site-metadata.config';
 import type { TagDTO } from '../dtos/tag.dto';
 import type { Tag } from '../models/tag';
 

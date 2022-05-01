@@ -3,11 +3,16 @@
 </script>
 
 <script lang="ts">
+	import { breakpointsConfig } from '$config/breakpoints.config';
+
 	// import { buildArticleJsonLd } from '$modules/portfolio/components/seo/build-json-ld';
 
 	// import Seo from '$modules/portfolio/components/seo/seo.svelte';
 	// import { serializeJsonLd } from '$modules/portfolio/components/seo/serialize-json-ld';
 	import Chip from '$modules/common/components/chip/chip.svelte';
+	import Image from '$modules/common/components/image/image.svelte';
+	import Srcset from '$modules/common/components/image/image.svelte';
+	import MediaFigure from '$modules/common/components/media-figure/media-figure.svelte';
 	import ArticlePortableText from '$modules/portfolio/components/portable-text/article-portable-text.svelte';
 	import SimplePortableText from '$modules/portfolio/components/portable-text/simple-portable-text.svelte';
 	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
@@ -68,7 +73,16 @@
 					}}
 				/>
 			{:else}
-				<img src={casestudy.featuredImage.url} alt={casestudy.featuredImage.alt} />
+				<MediaFigure>
+					<Image
+						lqip={casestudy.featuredImage.base64Lqip}
+						alt={casestudy.featuredImage.alt}
+						width={casestudy.featuredImage.width}
+						height={casestudy.featuredImage.height}
+						source={casestudy.featuredImage.url}
+						sizes={{ xl: '1500px' }}
+					/>
+				</MediaFigure>
 			{/if}
 		</div>
 	</header>

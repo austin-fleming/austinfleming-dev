@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ThemeButton from '$modules/common/components/theme-button/theme-button.svelte';
-	import { navigationConfig } from '$config/navigation-config';
+	import { navigationConfig } from '$config/navigation.config';
 </script>
 
 <header

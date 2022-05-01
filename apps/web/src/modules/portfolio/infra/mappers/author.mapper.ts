@@ -1,4 +1,4 @@
-import { siteMetadataConfig } from '$config/site-metadata-config';
+import { siteMetadataConfig } from '$config/site-metadata.config';
 import type { PersonSEO } from '../models/fragments/person-seo';
 import type { AuthorDTO } from '../dtos/author.dto';
 import type { Author } from '../models/author';

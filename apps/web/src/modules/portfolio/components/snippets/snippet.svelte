@@ -1,13 +1,14 @@
 <script lang="ts">
 	import Icon from '$modules/common/components/icons/icon.svelte';
 	import type { Snippet } from '$modules/portfolio/infra/models/snippets-page';
-	import Image from '$modules/portfolio/components/image/image.svelte';
+	import PortfolioImage from '$modules/portfolio/components/image/image.svelte';
 	// import type SnippetModal from './snippet-modal.svelte';
 	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
 	import { aspectRatio } from '$utils/aspect-ratio';
 	import type { SvelteComponent } from 'svelte';
 	import type { SvelteComponentDev } from 'svelte/internal';
 	import SnippetVideo from './snippet-video.svelte';
+	import Image from '$modules/common/components/image/image.svelte';
 
 	let _class = '';
 	export { _class as class };
@@ -26,7 +27,14 @@
 <article class={`root ${_class}`}>
 	<figure class="figure">
 		{#if snippet._type === 'image_asset'}
-			<img loading="lazy" class="image" src={`${snippet.url}?w=600`} alt={snippet.alt} />
+			<Image
+				lqip={snippet.base64Lqip}
+				alt={snippet.alt}
+				width={snippet.width}
+				height={snippet.width * 1.25}
+				source={snippet.url}
+				sizes={{ xl: `${1500 / 4}px`, md: '2vw' }}
+			/>
 		{/if}
 
 		{#if snippet._type === 'video_asset'}
@@ -58,16 +66,23 @@
 	{#if modalOpened && modal}
 		{#await modal then { default: SnippetModal }}
 			<SnippetModal>
-				<div class="modal__figure">
-					<button
-						class="absolute top-4  right-4"
-						type="button"
-						on:click={() => {
-							modalOpened = false;
-						}}>Close</button
-					>
+				<button
+					class="absolute top-4 right-4"
+					type="button"
+					on:click={() => {
+						modalOpened = false;
+					}}>Close</button
+				>
+				<div class="w-full max-h-full">
 					{#if snippet._type === 'image_asset'}
-						<Image imageSource={`${snippet.url}?w=1500`} alt={snippet.alt} />
+						<Image
+							lqip={snippet.base64Lqip}
+							alt={snippet.alt}
+							width={snippet.width}
+							height={snippet.height}
+							source={snippet.url}
+							class="max-h-full max-w-full mx-auto"
+						/>
 					{/if}
 
 					{#if snippet._type === 'video_asset'}
@@ -96,7 +111,7 @@
 	}
 
 	.figure {
-		@apply relative w-full pb-[125%] rounded-2xl overflow-hidden bg-accent1;
+		@apply relative w-full rounded-2xl overflow-hidden bg-accent1;
 	}
 
 	.image {
@@ -105,9 +120,5 @@
 
 	.open-action {
 		@apply bg-transparent border-0 absolute top-0 right-0 bottom-0 left-0 w-full h-full;
-	}
-
-	.modal__figure {
-		@apply w-[80%] h-[80%] flex flex-col justify-center items-center;
 	}
 </style>

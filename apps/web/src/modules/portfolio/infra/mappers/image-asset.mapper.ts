@@ -2,6 +2,7 @@ import { aspectRatio } from '$utils/aspect-ratio';
 import type { ImageAssetDTO } from '../dtos/image-asset.dto';
 import type { SeoImage } from '../models/fragments/seo-image';
 import type { ImageAsset } from '../models/image-asset';
+import { imageService } from '../services/image.service';
 import { simpleBlockTextMapper } from './fragments/simple-block-text.mapper';
 
 const dtoToModel = (dto: ImageAssetDTO): ImageAsset => {

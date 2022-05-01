@@ -1,6 +1,7 @@
 import type { Combine } from 'src/utils/combine';
 import type { DocumentBaseDTO } from './fragments/document-base.dto';
 import type { SimpleBlockTextDTO } from './fragments/simple-block-text-dto';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 
 type HexColor = `#${string}`;
 
