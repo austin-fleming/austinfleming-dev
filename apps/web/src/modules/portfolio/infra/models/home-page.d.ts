@@ -5,7 +5,6 @@ export type HomePage = {
 	casestudies: Casestudy[];
 	id: string;
 	path: string;
-	slug: string;
 	timestampModified: string;
 	timestampPublished: string;
 	title: string;

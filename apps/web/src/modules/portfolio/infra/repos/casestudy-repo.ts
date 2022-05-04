@@ -33,6 +33,25 @@ export const imageAssetProjection = `
 	}
 `;
 
+export const blockTextProjection = `
+	...,
+	_type == "block" => {
+		markDefs[] {
+			...,
+			_type == "link" => {
+				...,
+				internalReference->
+			}
+		}
+	},
+	_type == "video" => @-> {
+		${videoAssetProjection}
+	},
+	_type == "image" => @-> {
+		${imageAssetProjection}
+	}
+`;
+
 export const casestudyProjection = `
 	...,
 	author-> {
@@ -45,24 +64,7 @@ export const casestudyProjection = `
 			}
 		}
 	},
-	body[] {
-    ...,
-		_type == "block" => {
-      markDefs[] {
-			  ...,
-			  _type == "link" => {
-          ...,
-          internalReference->
-        }
-		  }
-    },
-    _type == "video" => @-> {
-			${videoAssetProjection}
-		},
-    _type == "image" => @-> {
-			${imageAssetProjection}
-		}
-  },
+	body[] {${blockTextProjection}},
 	primary_image-> {
 		${imageAssetProjection}
 	},

@@ -1,14 +1,15 @@
 <script lang="ts">
 	import Icon from '$modules/common/components/icons/icon.svelte';
 	import type { Snippet } from '$modules/portfolio/infra/models/snippets-page';
-	import PortfolioImage from '$modules/portfolio/components/image/image.svelte';
+	// import PortfolioImage from '$modules/portfolio/components/image/image.svelte';
 	// import type SnippetModal from './snippet-modal.svelte';
-	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
-	import { aspectRatio } from '$utils/aspect-ratio';
-	import type { SvelteComponent } from 'svelte';
-	import type { SvelteComponentDev } from 'svelte/internal';
+	// import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
+	// import { aspectRatio } from '$utils/aspect-ratio';
+	// import type { SvelteComponent } from 'svelte';
+	import { getContext, type SvelteComponentDev } from 'svelte/internal';
 	import SnippetVideo from './snippet-video.svelte';
 	import Image from '$modules/common/components/image/image.svelte';
+	import Chip from '$modules/common/components/chip/chip.svelte';
 
 	let _class = '';
 	export { _class as class };
@@ -22,18 +23,25 @@
 	const loadModal = () => {
 		modal = import('./snippet-modal.svelte');
 	};
+
+	// NOTE: optimization to ensure the first snippet can be eager loaded.
+	const isFirstSnippet = getContext<string | undefined>('first-snippet-id') === snippet.id;
 </script>
 
 <article class={`root ${_class}`}>
 	<figure class="figure">
 		{#if snippet._type === 'image_asset'}
 			<Image
-				lqip={snippet.base64Lqip}
 				alt={snippet.alt}
 				width={snippet.width}
 				height={snippet.width * 1.25}
 				source={snippet.url}
-				sizes={{ xl: `${1500 / 4}px`, md: '2vw' }}
+				sizes={{ lg: `${1500 / 4}px`, md: '50vw' }}
+				preload={isFirstSnippet}
+				config={{
+					provider: 'SANITY',
+					lqip: snippet.base64Lqip
+				}}
 			/>
 		{/if}
 
@@ -67,22 +75,28 @@
 		{#await modal then { default: SnippetModal }}
 			<SnippetModal>
 				<button
-					class="absolute top-4 right-4"
+					class="absolute top-4 right-4 z-modal"
 					type="button"
 					on:click={() => {
 						modalOpened = false;
-					}}>Close</button
+					}}><Chip>close</Chip></button
 				>
-				<div class="w-full max-h-full">
+				<div class="w-full h-full flex flex-col justify-center items-center gap-4">
 					{#if snippet._type === 'image_asset'}
-						<Image
-							lqip={snippet.base64Lqip}
-							alt={snippet.alt}
-							width={snippet.width}
-							height={snippet.height}
-							source={snippet.url}
-							class="max-h-full max-w-full mx-auto"
-						/>
+						<div class="w-full max-w-full h-auto max-h-full">
+							<Image
+								class="max-w-full max-h-full drop-shadow-md mx-auto"
+								alt={snippet.alt}
+								width={snippet.width}
+								height={snippet.height}
+								source={snippet.url}
+								sizes={{ '2xl': `${1500}px` }}
+								config={{
+									provider: 'SANITY',
+									lqip: snippet.base64Lqip
+								}}
+							/>
+						</div>
 					{/if}
 
 					{#if snippet._type === 'video_asset'}

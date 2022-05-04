@@ -3,7 +3,6 @@ import type { ArticlePortableTextBlockDTO } from '../../dtos/fragments/article-b
 import type { ImageAsset } from '../image-asset';
 import type { VideoAsset } from '../video-asset';
 import type { Link } from './link';
-import type { Tweet } from './tweet';
 
 type ArticlePortableTextBlock = Expand<
 	Omit<ArticlePortableTextBlockDTO, 'markDefs'> & {
@@ -11,4 +10,4 @@ type ArticlePortableTextBlock = Expand<
 	}
 >;
 
-export type ArticleBlockText = Array<ArticlePortableTextBlock | VideoAsset | ImageAsset | Tweet>;
+export type ArticleBlockText = Array<ArticlePortableTextBlock | VideoAsset | ImageAsset>;

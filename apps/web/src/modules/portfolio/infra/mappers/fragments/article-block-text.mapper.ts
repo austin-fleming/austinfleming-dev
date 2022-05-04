@@ -3,13 +3,11 @@ import type { ArticleBlockText } from '../../models/fragments/article-block-text
 import { imageAssetMapper } from '../image-asset.mapper';
 import { videoAssetMapper } from '../video-asset.mapper';
 import { linkMapper } from './link.mapper';
-import { tweetMapper } from './tweet.mapper';
 
 const dtoToModel = (blocks: ArticleBlockTextDTO): ArticleBlockText =>
 	blocks.map((block) => {
 		if (block._type === 'video_asset') return videoAssetMapper.dtoToModel(block);
 		if (block._type === 'image_asset') return imageAssetMapper.dtoToModel(block);
-		if (block._type === 'tweet') return tweetMapper.dtoToModel(block);
 
 		// Assumes _type === 'block' from here down
 		const markDefs = block.markDefs

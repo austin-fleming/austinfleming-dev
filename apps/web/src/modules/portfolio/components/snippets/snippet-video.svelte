@@ -1,6 +1,10 @@
 <script lang="ts">
 	import type { SimpleBlockText } from '$modules/portfolio/infra/models/fragments/simple-block-text';
-	import { Player, Hls, DefaultUi } from '@vime/svelte';
+	import type {
+		Player as PlayerType,
+		Hls as HlsType,
+		DefaultUi as DefaultUiType
+	} from '@vime/svelte';
 
 	/* 
 	NOTE:
@@ -28,22 +32,46 @@
 
 	// HACK: use of "any" due to the dynamic import of vime modules
 	let videoPlayer: any;
+
+	let Player: typeof PlayerType;
+	let Hls: typeof HlsType;
+	let DefaultUi: typeof DefaultUiType;
+
+	let playerLoaded = false;
+
+	onMount(async () => {
+		const Vime = await import('@vime/svelte');
+
+		Player = Vime.Player;
+		Hls = Vime.Hls;
+		DefaultUi = Vime.DefaultUi;
+
+		playerLoaded = true;
+	});
 </script>
 
 <figure class="w-full relative">
-	<Player
-		class="w-full"
-		style="--vm-player-border-radius: 1em;"
-		loop
-		muted
-		autoplay
-		bind:this={videoPlayer}
-	>
-		<Hls crossOrigin="anonymous" version="latest" poster={videoData.posterUrl}>
-			<source data-src={videoData.hlsSource} type="application/x-mpegURL" />
-		</Hls>
-		<DefaultUi />
-	</Player>
+	{#if playerLoaded}
+		<svelte:component
+			this={Player}
+			class="w-full"
+			style="--vm-player-border-radius: 1em;"
+			loop
+			muted
+			autoplay
+			bind:this={videoPlayer}
+		>
+			<svelte:component
+				this={Hls}
+				crossOrigin="anonymous"
+				version="latest"
+				poster={videoData.posterUrl}
+			>
+				<source data-src={videoData.hlsSource} type="application/x-mpegURL" />
+			</svelte:component>
+			<svelte:component this={DefaultUi} />
+		</svelte:component>
+	{/if}
 
 	{#if videoData.attribution || videoData.caption}
 		<figcaption>

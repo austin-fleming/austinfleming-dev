@@ -1,15 +1,20 @@
 <script lang="ts">
-	export let size: 'sm' | 'md' | 'lg' = 'md';
-	export let color: 'primary' | 'accent' = 'primary';
+	export let size: 'xs' | 'sm' | 'md' | 'lg' = 'md';
+	export let color: 'primary' | 'accent' | 'inverted' = 'primary';
+
+	let _class = '';
+	export { _class as class };
 </script>
 
 <div
-	class="root"
+	class={`root ${_class}`}
+	class:size--xs={size === 'xs'}
 	class:size--sm={size === 'sm'}
 	class:size--md={size === 'md'}
 	class:size--lg={size === 'lg'}
 	class:color--primary={color === 'primary'}
 	class:color--accent={color === 'accent'}
+	class:color--inverted={color === 'inverted'}
 >
 	<span class="content"><slot /></span>
 </div>
@@ -22,7 +27,9 @@
 	.content {
 		@apply leading-none tracking-wider;
 	}
-
+	.size--xs {
+		@apply text-[0.65rem];
+	}
 	.size--sm {
 		@apply text-xs;
 	}
@@ -38,5 +45,8 @@
 	}
 	.color--accent {
 		@apply text-background bg-accent1;
+	}
+	.color--inverted {
+		@apply text-primary bg-background;
 	}
 </style>

@@ -28,6 +28,7 @@ export type CasestudyDTO = Combine<
 		project_details?: ProjectDetailDTO[];
 		seo_keywords?: string[];
 		seo_summary?: string;
+		short_summary: string;
 		slug: {
 			_type: 'slug';
 			current: string;

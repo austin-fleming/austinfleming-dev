@@ -7,6 +7,5 @@ export type SnippetsPage = {
 	_type: 'snippets_page';
 	id: string;
 	path: string;
-	slug: string;
 	snippets: Snippet[];
 };

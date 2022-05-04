@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet as SnippetType } from '$modules/portfolio/infra/models/snippets-page';
-	import { onMount } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import ScrollLoop from './scroll-loop.svelte';
 	import Snippet from './snippet.svelte';
 
@@ -51,6 +51,9 @@
 			}
 		};
 	};
+
+	// NOTE: Optimization to eager-load the first snippet to improve lighthouse score. Consumer in snippet.
+	setContext('first-snippet-id', snippets[0].id);
 </script>
 
 <svelte:window bind:scrollY on:scroll={handleScroll} use:wheel={{ scrollable }} />

@@ -10,9 +10,6 @@ export type SnippetsPageDTO = Combine<
 	{
 		_type: 'snippets_page';
 		do_not_crawl: boolean;
-		slug: {
-			current: string;
-		};
 		snippets: SnippetDTO[];
 		title: string;
 	}

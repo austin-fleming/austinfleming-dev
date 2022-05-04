@@ -13,16 +13,20 @@
 	import SiteNav from '$modules/common/components/site-nav/site-nav.svelte';
 	import Context from '$modules/portfolio/context/context.svelte';
 	import { blur } from 'svelte/transition';
+	import BackgroundAnimation from '$modules/common/components/background-animation/background-animation.svelte';
 
 	export let key: string;
 </script>
 
 <Context>
+	<BackgroundAnimation />
+
 	<SiteNav />
 
-	<div class="bg-gradient-to-br from-gray-700 via-gray-900 to-black min-h-screen">
+	<!-- <div class="bg-gradient-to-br from-gray-700 via-gray-900 to-black min-h-screen"> -->
+	<div class="min-h-screen">
 		<PageTransition refresh={key}>
-			<main class="px-8 max-w-[1500px]">
+			<main class="w-full">
 				<slot />
 			</main>
 		</PageTransition>

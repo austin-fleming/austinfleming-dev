@@ -1,5 +1,13 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
+function withOpacityValue(variable) {
+  return ({ opacityValue }) => {
+    if (opacityValue === undefined) {
+      return `rgb(var(${variable}))`
+    }
+    return `rgb(var(${variable}) / ${opacityValue})`
+  }
+}
 
 module.exports = {
   content: ["src/**/*.{html,js,svelte,ts}"],
@@ -23,9 +31,9 @@ module.exports = {
     extend: {
       colors: {
         accent1: {
-          DEFAULT: `var(--c-accent-1)`,
-          less: `var(--c-accent-1--less)`,
-          lesser: `var(--c-accent-1--lesser)`,
+          DEFAULT: withOpacityValue('--c-accent-1'),
+          less: withOpacityValue('--c-accent-1--less'),
+          lesser: withOpacityValue('--c-accent-1--lesser'),
         },
         background: {
           DEFAULT: `var(--c-background)`,
@@ -33,9 +41,9 @@ module.exports = {
           lesser: `var(--c-background--least)`,
         },
         primary: {
-          DEFAULT: `var(--c-primary)`,
-          less: `var(--c-primary--less)`,
-          lesser: `var(--c-primary--lesser)`,
+          DEFAULT: withOpacityValue('--c-primary'),
+          less: withOpacityValue('--c-primary--less'),
+          lesser: withOpacityValue('--c-primary--lesser'),
         },
         ui: {
           error: {
@@ -69,7 +77,9 @@ module.exports = {
       },
       spacing: {
         sitegap: '32px',
-        header: '65px'
+        header: '65px',
+        sitepad: '2rem',
+        sitebottom: '8rem'
       },
       zIndex: {
         headerPrimary: 6000,

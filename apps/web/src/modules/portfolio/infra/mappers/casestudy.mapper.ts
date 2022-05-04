@@ -32,7 +32,8 @@ const dtoToModel = (dto: CasestudyDTO): Casestudy => {
 		body,
 		tags,
 		author,
-		summary
+		summary,
+		short_summary
 	} = dto;
 
 	// TODO: where should this be determined?
@@ -65,9 +66,21 @@ const dtoToModel = (dto: CasestudyDTO): Casestudy => {
 		title
 	};
 
+	const breadcrumbs = [
+		{
+			label: 'home',
+			to: '/'
+		},
+		{
+			label: 'work',
+			to: '/case-studies'
+		}
+	];
+
 	const casestudy: Casestudy = {
 		authors: [authorMapper.dtoToModel(author)],
 		body: articleBlockTextMapper.dtoToModel(body),
+		breadcrumbs,
 		featuredImage: imageAssetMapper.dtoToModel(primary_image),
 		featuredVideo: primary_video ? videoAssetMapper.dtoToModel(primary_video) : undefined,
 		id: _id,
@@ -76,6 +89,7 @@ const dtoToModel = (dto: CasestudyDTO): Casestudy => {
 		path,
 		projectDetails: makeProjectDetails(),
 		seo,
+		shortSummary: short_summary,
 		slug: slug.current,
 		summary: simpleBlockTextMapper.dtoToModel(summary),
 		tags: tags.map(tagMappers.dtoToModel),

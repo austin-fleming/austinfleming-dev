@@ -41,9 +41,10 @@
 	});
 </script>
 
-<figure class="w-full relative">
+<div class="w-full relative">
 	{#if showPlayer && Player}
-		<Player
+		<svelte:component
+			this={Player}
 			class="w-full"
 			style="--vm-player-border-radius: 1em;"
 			loop={playerOptions.loop}
@@ -56,11 +57,11 @@
 				videoPlayer.play();
 			}}
 		>
-			<Hls version="latest" poster={videoData.posterUrl}>
+			<svelte:component this={Hls} version="latest" poster={videoData.posterUrl}>
 				<source data-src={videoData.hlsSource} type="application/x-mpegURL" />
-			</Hls>
-			<DefaultUi />
-		</Player>
+			</svelte:component>
+			<svelte:component this={DefaultUi} />
+		</svelte:component>
 	{:else}
 		<!-- Fallback for no js or if player loading fails -->
 		<div class="relative">
@@ -68,7 +69,7 @@
 		</div>
 	{/if}
 
-	{#if videoData.attribution || videoData.caption}
+	<!-- {#if videoData.attribution || videoData.caption}
 		<figcaption>
 			{#if videoData.attribution}
 				<small>{videoData.attribution}</small>
@@ -78,5 +79,5 @@
 				<div><SimplePortableText blocks={videoData.caption} /></div>
 			{/if}
 		</figcaption>
-	{/if}
-</figure>
+	{/if} -->
+</div>

@@ -7,9 +7,6 @@ export type HomePageDTO = Combine<
 	{
 		_type: 'home_page';
 		case_studies: CasestudyDTO[];
-		slug: {
-			current: string;
-		};
 		title: string;
 	}
 >;

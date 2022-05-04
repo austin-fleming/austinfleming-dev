@@ -4,11 +4,16 @@
 
 	export let to: string;
 	export let isExternal = false;
+	export let prefetch = true;
+	export let noscroll = false;
 
-	const properties = {
-		target: isExternal ? '_blank' : '_self',
-		rel: isExternal ? 'noopener noreferrer nofollow' : ''
-	};
+	const properties = isExternal ? { rel: 'noopener noreferrer nofollow', target: '_blank' } : {};
 </script>
 
-<a href={to} {...properties} class={_class}><slot /></a>
+<a
+	sveltekit:prefetch={prefetch ? undefined : null}
+	sveltekit:noscroll={noscroll ? undefined : null}
+	href={to}
+	{...properties}
+	class={_class}><slot /></a
+>

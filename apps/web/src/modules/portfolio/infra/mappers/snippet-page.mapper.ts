@@ -12,14 +12,13 @@ const mapSnippet = (dto: SnippetDTO): Snippet => {
 };
 
 const dtoToModel = (dto: SnippetsPageDTO): SnippetsPage => {
-	const { _id, _createdAt, _updatedAt, _type, slug, do_not_crawl, snippets } = dto;
+	const { _id, _createdAt, _updatedAt, _type, do_not_crawl, snippets } = dto;
 
 	// TODO: needs seo
 	return {
 		_type,
 		id: _id,
 		path: `/snippets`,
-		slug: slug.current,
 		snippets: snippets.map(mapSnippet)
 	};
 };

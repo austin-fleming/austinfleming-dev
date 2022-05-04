@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { blur, type TransitionConfig } from 'svelte/transition';
+	import type { TransitionConfig } from 'svelte/transition';
 	import { cubicIn, cubicOut } from 'svelte/easing';
 	export let refresh = '';
 
@@ -36,12 +36,12 @@
 			duration,
 			delay,
 			css: (t, u) => {
-				const eased = cubicIn(t);
+				const eased = cubicOut(t);
 				const easedInverted = cubicIn(u);
-
 				return `
-          transform: translateY(${easedInverted * 100}vh);
-					border-radius: 2rem;
+          transform: translateY(${easedInverted * 100}vh) scale(${0.97 + eased * 0.03});
+          
+					border-radius: ${easedInverted * 2}rem ${easedInverted * 2}rem 0 0;
         `;
 			}
 		};
@@ -49,8 +49,9 @@
 </script>
 
 {#key refresh}
+	<!-- HACK: min-h value assures there's always a scrollbar -->
 	<div
-		class="min-h-screen bg-background"
+		class="min-h-[100.1vh]"
 		in:pageSlideUp={{ duration: 500, delay: 750 }}
 		out:pageFuzzOut={{ duration: 500 }}
 	>

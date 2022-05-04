@@ -22,10 +22,10 @@ export const navigationConfig: NavigationConfig = {
 		{
 			label: 'snippets',
 			to: '/snippets'
-		},
+		} /* ,
 		{
 			label: 'contact',
 			to: '/contact'
-		}
+		} */
 	]
 };

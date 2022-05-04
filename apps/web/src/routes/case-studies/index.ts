@@ -1,13 +1,13 @@
-import type { Casestudy } from '$modules/portfolio/infra/models/casestudy';
-import { casestudyUsecases } from '$modules/portfolio/infra/services/casestudy.service';
 import type { RequestHandler } from '@sveltejs/kit';
+import { pageService } from '$modules/portfolio/infra/services/page.service';
+import type { CasestudiesPage } from '$modules/portfolio/infra/models/casestudies-page';
 
 type Parameters = { slug: string };
-type Output = { body: { casestudies: Casestudy[] }; status: 200 } | { status: 404 };
+type Output = { body: { casestudies: CasestudiesPage }; status: 200 } | { status: 404 };
 
-const makeSuccessResponse = (casestudies: Casestudy[]) => ({
+const makeSuccessResponse = (casestudiesPage: CasestudiesPage) => ({
 	body: {
-		casestudies
+		casestudiesPage
 	},
 	status: 200
 });
@@ -16,8 +16,9 @@ const makeFailureResponse = () => ({
 	status: 404
 });
 
+// TODO: needs project list from home page
 export const get: RequestHandler<Parameters, Output> = async () => {
-	const maybeCasestudy = await casestudyUsecases.getPaginated();
+	const maybeCasestudiesPage = await pageService.getCasestudiesPage();
 
-	return maybeCasestudy.match(makeSuccessResponse, makeFailureResponse);
+	return maybeCasestudiesPage.match(makeSuccessResponse, makeFailureResponse);
 };

@@ -3,7 +3,6 @@
 import type { ImageAssetDTO } from '../image-asset.dto';
 import type { VideoAssetDTO } from '../video-asset.dto';
 import type { LinkDTO } from './link-dto';
-import type { TweetDTO } from './tweet-dto';
 
 type Mark = 'strong' | 'em' | 'strike-through';
 
@@ -36,5 +35,5 @@ export type ArticlePortableTextBlockDTO = {
 };
 
 export type ArticleBlockTextDTO = Array<
-	ArticlePortableTextBlockDTO | VideoAssetDTO | ImageAssetDTO | TweetDTO
+	ArticlePortableTextBlockDTO | VideoAssetDTO | ImageAssetDTO
 >;

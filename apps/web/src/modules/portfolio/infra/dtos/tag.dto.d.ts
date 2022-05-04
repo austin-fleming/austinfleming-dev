@@ -4,6 +4,7 @@ import type { DocumentBaseDTO } from './fragments/document-base.dto';
 export type TagDTO = Combine<
 	DocumentBaseDTO,
 	{
+		_type: 'tag';
 		slug: {
 			_type: 'slug';
 			current: string;
