@@ -5,10 +5,11 @@ This file serves two purposes:
 2. Prevents having to import the entire Vime library when dynamically importing
 */
 
-import type { Player, Hls, DefaultUi } from '@vime/svelte';
+import type { Player, Hls, DefaultUi, Video } from '@vime/svelte';
 
 export type PlayerType = typeof Player;
 export type HlsType = typeof Hls;
 export type DefaultUiType = typeof DefaultUi;
+export type VideoType = typeof Video;
 
-export { DefaultUi, Player, Hls } from '@vime/svelte';
+export { DefaultUi, Player, Hls, Video } from '@vime/svelte';

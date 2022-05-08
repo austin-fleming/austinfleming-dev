@@ -3,7 +3,7 @@
 	import type { Snippet } from '$modules/portfolio/infra/models/snippets-page';
 	// import PortfolioImage from '$modules/portfolio/components/image/image.svelte';
 	// import type SnippetModal from './snippet-modal.svelte';
-	// import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
+	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
 	// import { aspectRatio } from '$utils/aspect-ratio';
 	// import type { SvelteComponent } from 'svelte';
 	import { getContext, type SvelteComponentDev } from 'svelte/internal';
@@ -29,7 +29,7 @@
 </script>
 
 <article class={`root ${_class}`}>
-	<figure class="figure">
+	<figure class="figure relative">
 		{#if snippet._type === 'image_asset'}
 			<Image
 				alt={snippet.alt}
@@ -46,14 +46,19 @@
 		{/if}
 
 		{#if snippet._type === 'video_asset'}
-			<img
-				loading="lazy"
-				class="image"
-				src={snippet.gifUrl || snippet.thumbnailUrl}
+			<Image
 				alt={snippet.title}
+				width={snippet.formats.mp4.medium.width}
+				height={snippet.formats.mp4.medium.width * 1.25}
+				source={snippet.thumbnailUrl}
+				sizes={{ lg: `${1500 / 4}px`, md: '50vw' }}
+				preload={isFirstSnippet}
+				config={{
+					provider: 'MUX'
+				}}
 			/>
 			<span
-				class="absolute w-full h-full flex flex-col justify-center items-center text-background opacity-50 text-8xl"
+				class="absolute top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center text-background opacity-90 text-5xl"
 			>
 				<Icon name="play" />
 			</span>
@@ -100,7 +105,18 @@
 					{/if}
 
 					{#if snippet._type === 'video_asset'}
-						<SnippetVideo
+						<VideoPlayer
+							class="drop-shadow-md"
+							videoData={{
+								title: snippet.title,
+								mp4Source: snippet.formats.mp4.high.source,
+								posterUrl: snippet.thumbnailUrl,
+								aspectRatio: snippet.aspectRatio.ratio,
+								attribution: snippet.attribution,
+								caption: snippet.caption
+							}}
+						/>
+						<!-- <SnippetVideo
 							videoData={{
 								posterUrl: snippet.thumbnailUrl,
 								hlsSource: snippet.hlsPlaybackUrl,
@@ -110,7 +126,7 @@
 								aspectRatio: snippet.aspectRatio
 							}}
 							playerOptions={{ loop: true, muted: true }}
-						/>
+						/> -->
 					{/if}
 				</div>
 			</SnippetModal>
@@ -125,7 +141,7 @@
 	}
 
 	.figure {
-		@apply relative w-full rounded-2xl overflow-hidden bg-accent1;
+		@apply relative w-full rounded-2xl overflow-hidden;
 	}
 
 	.image {

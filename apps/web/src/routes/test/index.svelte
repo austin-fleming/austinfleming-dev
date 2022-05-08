@@ -4,7 +4,9 @@
 
 <script lang="ts">
 	import { siteMetadataConfig } from '$config/site-metadata.config';
+
 	import BreadCrumbs from '$modules/common/components/bread-crumbs/bread-crumbs.svelte';
+	import Link from '$modules/common/components/link.svelte';
 	import CasestudyCard from '$modules/portfolio/components/casestudies/casestudy-card.svelte';
 	import SimplePortableText from '$modules/portfolio/components/portable-text/simple-portable-text.svelte';
 	import type { CasestudiesPage } from '$modules/portfolio/infra/models/casestudies-page';

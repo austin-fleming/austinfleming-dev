@@ -12,7 +12,7 @@
 <section
 	class="w-full min-h-screen px-sitepad flex flex-col gap-12 justify-center items-center text-center opacity-90"
 >
-	<h1 class="w-full text-6xl md:text-[10vw] font-bold">Austin Fleming</h1>
+	<h1 class="w-full text-6xl md:text-[10vw] font-black tracking-tight">Austin Fleming</h1>
 	<p class="">Front-leaning webdev with a background in architecture</p>
 
 	<ul>
@@ -41,3 +41,6 @@
 		</li>
 	</ul>
 </section>
+
+<style>
+</style>

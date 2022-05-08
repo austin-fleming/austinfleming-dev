@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Image from '$modules/common/components/image/image.svelte';
 	import type { VideoAsset } from '$modules/portfolio/infra/models/video-asset';
 	import VideoPlayer from '../../video-player/video-player.svelte';
 
@@ -8,9 +9,9 @@
 <VideoPlayer
 	videoData={{
 		title: videoData.title,
-		hlsSource: videoData.hlsPlaybackUrl,
+		mp4Source: videoData.formats.mp4.high.source,
 		posterUrl: videoData.thumbnailUrl,
-		aspectRatio: videoData.aspectRatio,
+		aspectRatio: videoData.aspectRatio.ratio,
 		attribution: videoData.attribution,
 		caption: videoData.caption
 	}}

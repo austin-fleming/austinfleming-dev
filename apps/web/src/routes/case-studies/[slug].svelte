@@ -6,6 +6,7 @@
 	import BreadCrumbs from '$modules/common/components/bread-crumbs/bread-crumbs.svelte';
 	import Image from '$modules/common/components/image/image.svelte';
 	import Link from '$modules/common/components/link.svelte';
+	import CaseStudyHeroVideo from '$modules/portfolio/components/casestudies/case-study-hero-video.svelte';
 	import ArticlePortableText from '$modules/portfolio/components/portable-text/article-portable-text.svelte';
 	import SimplePortableText from '$modules/portfolio/components/portable-text/simple-portable-text.svelte';
 	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
@@ -64,12 +65,13 @@
 
 		<figure id="article-main-media" class="content-wide">
 			{#if casestudy.featuredVideo}
+				<!-- <CaseStudyHeroVideo videoAsset={casestudy.featuredVideo} /> -->
 				<VideoPlayer
 					videoData={{
 						title: casestudy.featuredVideo.title,
-						hlsSource: casestudy.featuredVideo.hlsPlaybackUrl,
+						mp4Source: casestudy.featuredVideo.formats.mp4.high.source,
 						posterUrl: casestudy.featuredVideo.thumbnailUrl,
-						aspectRatio: casestudy.featuredVideo.aspectRatio,
+						aspectRatio: casestudy.featuredVideo.aspectRatio.ratio,
 						attribution: casestudy.featuredVideo.attribution,
 						caption: casestudy.featuredVideo.caption
 					}}
@@ -114,8 +116,24 @@
 
 		<section
 			id="article-body"
-			class="content-narrow prose prose-sm sm:prose-base md:prose-lg xl:prose-xl prose-p:text-primary-less"
+			class="content-narrow prose prose-sm sm:prose-base md:prose-lg xl:prose-xl prose-p:text-primary-less prose-video:m-0 prose-video:p-0 prose-img:rounded-2xl"
 		>
+			<!-- If featured video exists, move featured image to start of body -->
+			{#if casestudy.featuredVideo}
+				<Image
+					class="w-full"
+					alt={casestudy.featuredImage.alt}
+					width={casestudy.featuredImage.width}
+					height={casestudy.featuredImage.height}
+					source={casestudy.featuredImage.url}
+					sizes={{ xl: '1500px' }}
+					config={{
+						lqip: casestudy.featuredImage.base64Lqip,
+						provider: 'SANITY'
+					}}
+				/>
+			{/if}
+
 			<ArticlePortableText blocks={casestudy.body} />
 		</section>
 	</article>

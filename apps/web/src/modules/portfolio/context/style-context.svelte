@@ -3,16 +3,16 @@
 </script>
 
 <svelte:head>
-	<link
+	<!-- <link
 		rel="preload"
 		href="/fonts/manrope-variable.woff2"
 		as="font"
 		type="font/woff2"
 		crossorigin="anonymous"
-	/>
+	/> -->
 	<link
 		rel="preload"
-		href="/fonts/manrope-variable.woff2"
+		href="/fonts/Inter.var.woff2"
 		as="font"
 		type="font/woff2"
 		crossorigin="anonymous"

@@ -27,5 +27,6 @@ export type VideoAssetDTO = Combine<
 		attribution?: string;
 		caption?: SimpleBlockTextDTO;
 		title: string;
+		videoTitle: string;
 	}
 >;

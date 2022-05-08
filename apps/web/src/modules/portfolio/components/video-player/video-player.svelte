@@ -11,11 +11,11 @@
 	import { onMount, SvelteComponent } from 'svelte';
 	import SimplePortableText from '../portable-text/simple-portable-text.svelte';
 	// Only needed for typing variable declarations. Actual import occurs on mount.
-	import type { PlayerType, HlsType, DefaultUiType } from './vime';
+	import type { PlayerType, HlsType, DefaultUiType, VideoType } from './vime';
 
 	export let videoData: {
 		posterUrl: string;
-		hlsSource: string;
+		mp4Source: string;
 		aspectRatio: number;
 		title: string;
 		attribution?: string;
@@ -25,30 +25,34 @@
 		loop?: boolean;
 		muted?: boolean;
 	} = {};
+	let _class = '';
+	export { _class as class };
 
 	let Player: PlayerType;
 	let Hls: HlsType;
 	let DefaultUi: DefaultUiType;
+	let Video: VideoType;
 
 	// HACK: use of "any" due to the dynamic import of vime modules
 	let videoPlayer: any;
 	let showPlayer = false;
 
 	onMount(async () => {
-		({ Player, Hls, DefaultUi } = await import('./vime'));
+		({ Player, Hls, DefaultUi, Video } = await import('./vime'));
 
 		showPlayer = true;
 	});
 </script>
 
-<div class="w-full relative">
+<div class={`w-full relative not-prose ${_class}`}>
 	{#if showPlayer && Player}
 		<svelte:component
 			this={Player}
 			class="w-full"
 			style="--vm-player-border-radius: 1em;"
-			loop={playerOptions.loop}
-			muted={playerOptions.muted ?? true}
+			loop
+			muted
+			autoplay
 			bind:this={videoPlayer}
 			on:vmPlaybackReady={async (e) => {
 				const canAutoplay = await videoPlayer.canAutoplay();
@@ -57,27 +61,14 @@
 				videoPlayer.play();
 			}}
 		>
-			<svelte:component this={Hls} version="latest" poster={videoData.posterUrl}>
-				<source data-src={videoData.hlsSource} type="application/x-mpegURL" />
+			<svelte:component this={Video}>
+				<source data-src={videoData.mp4Source} type="video/mp4" />
 			</svelte:component>
 			<svelte:component this={DefaultUi} />
 		</svelte:component>
 	{:else}
-		<!-- Fallback for no js or if player loading fails -->
 		<div class="relative">
 			<img src={videoData.posterUrl} alt={videoData.title} />
 		</div>
 	{/if}
-
-	<!-- {#if videoData.attribution || videoData.caption}
-		<figcaption>
-			{#if videoData.attribution}
-				<small>{videoData.attribution}</small>
-			{/if}
-
-			{#if videoData.caption}
-				<div><SimplePortableText blocks={videoData.caption} /></div>
-			{/if}
-		</figcaption>
-	{/if} -->
 </div>

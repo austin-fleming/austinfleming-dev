@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { navigationConfig } from '$config/navigation.config';
-	import { onMount } from 'svelte';
+	// import { onMount } from 'svelte';
+	// import ThemeButton from '../theme-button/theme-button.svelte';
 
 	/* let currentPath = '';
 
@@ -16,18 +17,19 @@
 	>
 		{#each navigationConfig.items as { to, label } (label)}
 			<a
-				class="block px-[0.5em] leading-none text-background text-center font-bold hover:text-accent1"
+				class="relative block px-[0.5em] leading-none text-background text-center font-bold hover:opacity-50 transition-opacity duration-200"
 				class:current={$page.url.pathname === to}
 				href={to}
 				sveltekit:prefetch>{label}</a
 			>
 		{/each}
 	</nav>
-	<!-- 	<ThemeButton /> -->
+	<!-- <ThemeButton /> -->
 </header>
 
 <style>
-	.current {
-		@apply text-accent1-lesser;
+	.current:before {
+		content: '';
+		@apply absolute -bottom-[10px] left-1/2 -translate-x-1/2 h-[6px] w-[6px] rounded-full bg-background;
 	}
 </style>

@@ -1,24 +1,5 @@
 import type { SimpleBlockText } from './fragments/simple-block-text';
 
-export type VideoAsset = {
-	// HACK: this is only needed for portable text deserialization
-	_type: 'video_asset';
-	aspectRatio: number;
-	attribution?: string;
-	caption?: SimpleBlockText;
-	duration: number;
-	frameRate: number;
-	gifUrl?: string;
-	height: number;
-	hlsPlaybackUrl: string;
-	id: string;
-	playbackId: string;
-	provider: 'MUX';
-	thumbnailUrl: string;
-	title: string;
-	width: number;
-};
-
 type Mp4Track = {
 	bitrate: number;
 	fileType: 'mp4';
@@ -54,10 +35,14 @@ type MakeThumbnailOptions = {
 	width: number;
 };
 
-type MakeCreateThumbnail = (playbackId: string) => (options: MakeThumbnailOptions) => string;
+export type CreateThumbnail = (width: number) => string;
 
-type UpdatedVideo = {
-	// NOTE: this is only needed for portable text deserialization
+export type MakeCreateThumbnail = (
+	playbackId: string
+) => (options: MakeThumbnailOptions) => CreateThumbnail;
+
+export type VideoAsset = {
+	// NOTE: _type is only needed for portable text deserialization
 	_type: 'video_asset';
 	aspectRatio: {
 		// ex. 16:9
@@ -75,4 +60,7 @@ type UpdatedVideo = {
 	id: string;
 	playbackId: string;
 	provider: 'MUX';
+	thumbnailFactory: CreateThumbnail;
+	thumbnailUrl: string;
+	title: string;
 };

@@ -6,7 +6,7 @@
 </script>
 
 <figure>
-	<img src={imageSource} {alt} class="mb-0 rounded-[1em]" />
+	<img src={imageSource} {alt} class="mb-0" />
 
 	<!-- {#if $$slots.caption || $$slots.attribution} -->
 	{#if $$slots.default}
