@@ -29,16 +29,22 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
     },
     extend: {
+      borderWidth: {
+        section: '1px'
+      },
       colors: {
         accent1: {
           DEFAULT: withOpacityValue('--c-accent-1'),
           less: withOpacityValue('--c-accent-1--less'),
           lesser: withOpacityValue('--c-accent-1--lesser'),
         },
+        accent2: {
+          DEFAULT: withOpacityValue('--c-accent-2'),
+        },
         background: {
-          DEFAULT: `var(--c-background)`,
-          less: `var(--c-background--less)`,
-          lesser: `var(--c-background--least)`,
+          DEFAULT: withOpacityValue('--c-background'),
+          less: withOpacityValue('--c-background--less'),
+          lesser: withOpacityValue('--c-background--least'),
         },
         primary: {
           DEFAULT: withOpacityValue('--c-primary'),
@@ -66,7 +72,7 @@ module.exports = {
       },
       fontFamily: {
         // 'sans': ['Manrope', ...defaultTheme.fontFamily.sans]
-        'sans': ['Inter', ...defaultTheme.fontFamily.sans]
+        'sans': ['primary-family', ...defaultTheme.fontFamily.sans]
       },
 
       maxWidth: {
@@ -77,10 +83,12 @@ module.exports = {
         screenMinusHeader: `var(--l-screen-minus-header)`,
       },
       spacing: {
-        sitegap: '32px',
-        header: '65px',
-        sitepad: '2rem',
-        sitebottom: '8rem'
+        contentPadding: 'var(--l-content-padding)',
+        sitegap: '32px', // TODO: remove?
+        header: 'var(--l-header-height)',
+        headerDouble: 'calc(var(--l-header-height) * 2)',
+        sitepad: '2rem', // TODO: remove?
+        sitebottom: '8rem', // TODO: remove?
       },
       zIndex: {
         headerPrimary: 6000,

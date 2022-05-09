@@ -11,13 +11,15 @@ Color contrast against default background go as follows:
 	--c-primary--less: 64 64 64;
 	--c-primary--lesser: 163 163 163;
 
-	--c-background: theme('colors.neutral.100');
-	--c-background--less: theme('colors.neutral.200');
-	--c-background--lesser: theme('colors.neutral.300');
+	--c-background: 245 245 245;
+	--c-background--less: 229 229 229;
+	--c-background--lesser: 212 212 212;
 
 	--c-accent-1: 107 33 168;
 	--c-accent-1--less: 126 34 206;
 	--c-accent-1--lesser: 147 51 234;
+
+	--c-accent-2: 236 189 155;
 
 	--c-ui-warn: #7d7100;
 	--c-ui-warn--bg: #f4f2de;
@@ -36,9 +38,9 @@ Color contrast against default background go as follows:
 	--c-primary--less: 229 229 229;
 	--c-primary--lesser: 212 212 212;
 
-	--c-background: theme('colors.neutral.900');
-	--c-background--less: theme('colors.neutral.800');
-	--c-background--lesser: theme('colors.neutral.700');
+	--c-background: 23 23 23;
+	--c-background--less: 38 38 38;
+	--c-background--lesser: 64 64 64;
 
 	--c-accent-1: 233 213 255;
 	--c-accent-1--less: 216 180 254;
