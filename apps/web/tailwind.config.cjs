@@ -44,7 +44,7 @@ module.exports = {
         background: {
           DEFAULT: withOpacityValue('--c-background'),
           less: withOpacityValue('--c-background--less'),
-          lesser: withOpacityValue('--c-background--least'),
+          lesser: withOpacityValue('--c-background--lesser'),
         },
         primary: {
           DEFAULT: withOpacityValue('--c-primary'),

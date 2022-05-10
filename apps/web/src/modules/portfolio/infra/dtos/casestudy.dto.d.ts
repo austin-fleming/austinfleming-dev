@@ -1,6 +1,7 @@
 import type { Combine } from 'src/utils/combine';
 import type { AuthorDTO } from './author.dto';
 import type { ArticleBlockTextDTO } from './fragments/article-block-text-dto';
+import type { ArticleBodyDTO } from './fragments/article-body.dto';
 import type { DocumentBaseDTO } from './fragments/document-base.dto';
 import type { SimpleBlockTextDTO } from './fragments/simple-block-text-dto';
 import type { ImageAssetDTO } from './image-asset.dto';
@@ -18,6 +19,7 @@ export type CasestudyDTO = Combine<
 	DocumentBaseDTO,
 	{
 		_type: 'case_study';
+		article_body: ArticleBodyDTO;
 		author: AuthorDTO;
 		body: ArticleBlockTextDTO;
 		date_published: string;

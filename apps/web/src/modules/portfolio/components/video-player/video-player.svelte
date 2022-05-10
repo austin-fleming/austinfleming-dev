@@ -49,7 +49,6 @@
 		<svelte:component
 			this={Player}
 			class="w-full"
-			style="--vm-player-border-radius: 1em;"
 			loop
 			muted
 			autoplay

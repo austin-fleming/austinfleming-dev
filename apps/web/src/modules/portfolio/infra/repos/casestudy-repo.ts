@@ -71,7 +71,25 @@ export const casestudyProjection = `
 	primary_video-> {
 		${videoAssetProjection}
 	},
-	tags[]->
+	tags[]->,
+	article_body[] {
+		...,
+		_type == "reference" => @-> {
+			...,
+			image {
+				...,
+				asset->
+			},
+			asset_data {
+				...,
+				asset->
+			}
+		},
+		_type == "article_text_section" => {
+			...,
+			body[] {${blockTextProjection}}
+		}
+	}
 `;
 
 /*

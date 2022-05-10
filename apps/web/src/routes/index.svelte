@@ -30,19 +30,12 @@
 
 	onMount(() => {
 		workTop = workSection.offsetTop;
-		console.log({ hash });
 		if (hash === '#hash') mainElement.scrollTop = workTop;
 	});
 
 	$: {
 		hash = $page.url.hash;
-
-		console.log('currentHash:', hash);
-		console.log('workTop', workTop);
-		console.log('mainScrollTop', mainElement?.scrollTop);
 		if (mainElement && hash === '#work') mainElement.scrollTop = workTop;
-
-		console.log({ hash2: hash });
 	}
 </script>
 

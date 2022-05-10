@@ -1,6 +1,6 @@
-import type { CasestudyDTO } from '../dtos/casestudy.dto';
 import type { Author } from './author';
 import type { ArticleBlockText } from './fragments/article-block-text';
+import type { ArticleBody } from './fragments/article-body';
 import type { ArticleSEO } from './fragments/article-seo';
 import type { Breadcrumb } from './fragments/breadcrumb';
 import type { SimpleBlockText } from './fragments/simple-block-text';
@@ -14,6 +14,7 @@ type ProjectDetail = {
 };
 
 export type Casestudy = {
+	articleBody: ArticleBody;
 	authors: Author[];
 	body: ArticleBlockText;
 	breadcrumbs: Breadcrumb[];

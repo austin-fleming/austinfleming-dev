@@ -16,7 +16,6 @@
 
 	$: {
 		test = scrollY;
-		console.log({ test });
 	}
 </script>
 

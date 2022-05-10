@@ -3,7 +3,9 @@
 </script>
 
 <script lang="ts">
+	import BackgroundAnimation from '$modules/common/components/background-animation/background-animation.svelte';
 	import BreadCrumbs from '$modules/common/components/bread-crumbs/bread-crumbs.svelte';
+	import Icon from '$modules/common/components/icons/icon.svelte';
 	import Image from '$modules/common/components/image/image.svelte';
 	import Link from '$modules/common/components/link.svelte';
 	import CaseStudyHeroVideo from '$modules/portfolio/components/casestudies/case-study-hero-video.svelte';
@@ -35,150 +37,154 @@
 	)} -->
 </svelte:head>
 
-<div
-	class="w-full min-h-screen [--article-bottom:6rem] pb-[var(--article-bottom)] pt-[15vh] [--border-radii:1rem]"
->
-	<article
-		class="bg-background shadow-lg rounded-[var(--border-radii)] overflow-hidden p-4 sm:px-8 flex flex-col gap-16 py-8"
-	>
-		<header id="article-header" class="content-wide flex flex-col gap-8">
-			<div>
-				<BreadCrumbs class="md:text-lg" crumbs={casestudy.breadcrumbs} />
+<main class="w-full overflow-x-hidden pb-header bg-primary">
+	<article class="relative w-full [--hero-height:min(30rem,50vh)] pt-[var(--hero-height)]">
+		<header
+			class="fixed top-0 right-0 left-0 h-[var(--hero-height)] min-h-[var(--hero-height)] flex flex-col justify-between text-background"
+		>
+			<Image
+				preload
+				class="w-full h-full absolute top-0 right-0 left-0 bottom-0 object-cover object-center -z-10 opacity-50"
+				alt={casestudy.featuredImage.alt}
+				width={casestudy.featuredImage.width}
+				height={casestudy.featuredImage.height}
+				source={casestudy.featuredImage.url}
+				sizes={{ xl: '1500px' }}
+				config={{
+					lqip: casestudy.featuredImage.base64Lqip,
+					provider: 'SANITY'
+				}}
+			/>
+			<nav
+				class="width-wide p-contentPadding flex flex-row items-center leading-none font-bold text-sm gap-[0.5em]"
+			>
+				{#each casestudy.breadcrumbs as { to, label } (to)}
+					<Link class="hover:underline transition duration-200" {to}>{label}</Link>
+					<Icon name="caretRight" />
+				{/each}
+			</nav>
 
-				<ul class="flex flex-row flex-wrap gap-2 mt-2 text-xs text-primary-lesser font-bold">
-					{#each casestudy.tags as { title, slug, seo, id } (id)}
-						<li>
-							<!-- <Chip size="xs" class="opacity-50">{title}</Chip> -->
-							<span>{title.toLowerCase()}</span>
-						</li>
-					{/each}
-				</ul>
-			</div>
+			<h1 class="text-4xl sm:text-6xl width-wide px-contentPadding ">
+				{casestudy.title}
+			</h1>
 
-			<div class="py-16 max-w-[90%] sm:max-w-[80%]">
-				<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold">{casestudy.title}</h1>
-				<p class="text-primary-lesser font-bold mt-[1.25em] text-base sm:text-lg lg:text-2xl">
-					{casestudy.shortSummary}
-				</p>
-			</div>
+			<ul
+				class="width-wide p-contentPadding flex flex-row flex-wrap justify-start items-center text-xs gap-[0.5em] "
+			>
+				{#each casestudy.tags as { title } (title)}
+					<li
+						class="py-[0.3em] px-[1.25em] bg-background/75 font-bold text-primary/80 rounded-[0.5em]"
+					>
+						{title}
+					</li>
+				{/each}
+			</ul>
 		</header>
 
-		<figure id="article-main-media" class="content-wide">
-			{#if casestudy.featuredVideo}
-				<!-- <CaseStudyHeroVideo videoAsset={casestudy.featuredVideo} /> -->
-				<VideoPlayer
-					videoData={{
-						title: casestudy.featuredVideo.title,
-						mp4Source: casestudy.featuredVideo.formats.mp4.high.source,
-						posterUrl: casestudy.featuredVideo.thumbnailUrl,
-						aspectRatio: casestudy.featuredVideo.aspectRatio.ratio,
-						attribution: casestudy.featuredVideo.attribution,
-						caption: casestudy.featuredVideo.caption
-					}}
-				/>
-			{:else}
-				<Image
-					class="w-full"
-					alt={casestudy.featuredImage.alt}
-					width={casestudy.featuredImage.width}
-					height={casestudy.featuredImage.height}
-					source={casestudy.featuredImage.url}
-					sizes={{ xl: '1500px' }}
-					config={{
-						lqip: casestudy.featuredImage.base64Lqip,
-						provider: 'SANITY'
-					}}
-				/>
+		<div class="relative border-t-section border-solid border-primary bg-background">
+			{#if casestudy.projectDetails}
+				<section
+					id="article-details"
+					class="width-wide p-contentPadding grid grid-cols-1 sm:grid-cols-[3fr,_2fr] md:grid-cols-2 gap-8 md:gap-24 items-baseline"
+				>
+					<div id="article-summary" class="prose prose-md sm:prose-lg md:prose-xl font-bold">
+						<SimplePortableText blocks={casestudy.summary} />
+					</div>
+
+					<div class="w-full grid grid-cols-2 sm:grid-cols-2 gap-4 items-baseline">
+						{#each casestudy.projectDetails as { title, description } (title)}
+							<div class="flex-shrink flex-grow basis-[150px]">
+								<p class="font-bold text-sm">{title}</p>
+								<div class="prose prose-sm opacity-80">
+									<SimplePortableText blocks={description} />
+								</div>
+							</div>
+						{/each}
+					</div>
+				</section>
 			{/if}
-		</figure>
 
-		{#if casestudy.projectDetails}
-			<section
-				id="article-details"
-				class="content-wide grid grid-cols-1 sm:grid-cols-[3fr,_2fr] md:grid-cols-2 gap-8 md:gap-24 items-baseline"
-			>
-				<div id="article-summary" class="prose prose-md sm:prose-lg md:prose-xl font-bold">
-					<SimplePortableText blocks={casestudy.summary} />
-				</div>
-
-				<div class="w-full grid grid-cols-2 sm:grid-cols-2 gap-4 items-baseline">
-					{#each casestudy.projectDetails as { title, description } (title)}
-						<div class="flex-shrink flex-grow basis-[150px]">
-							<p class="font-bold text-sm">{title}</p>
-							<div class="prose prose-sm opacity-80">
-								<SimplePortableText blocks={description} />
+			<section class="width-wide p-contentPadding flex flex-col gap-contentPadding">
+				{#each casestudy.articleBody as body (body._key)}
+					{#if body._type === 'article_text_section'}
+						<div class="grid grid-cols-1 md:grid-cols-2 py-contentPadding items-baseline">
+							<h2 class="text-3xl md-4xl mb-[0.75em] md:mb-0">{body.title}</h2>
+							<div class="prose">
+								<ArticlePortableText blocks={body.body} />
 							</div>
 						</div>
-					{/each}
-				</div>
+					{/if}
+
+					{#if body._type === 'image_asset'}
+						<Image
+							class="w-full"
+							alt={body.alt}
+							width={body.width}
+							height={body.height}
+							source={body.url}
+							sizes={{ xl: '1500px' }}
+							config={{
+								lqip: body.base64Lqip,
+								provider: 'SANITY'
+							}}
+						/>
+					{/if}
+
+					{#if body._type === 'video_asset'}
+						<VideoPlayer
+							videoData={{
+								title: body.title,
+								mp4Source: body.formats.mp4.high.source,
+								posterUrl: body.thumbnailUrl,
+								aspectRatio: body.aspectRatio.ratio,
+								attribution: body.attribution,
+								caption: body.caption
+							}}
+						/>
+					{/if}
+				{/each}
 			</section>
-		{/if}
-
-		<section
-			id="article-body"
-			class="content-narrow prose prose-sm sm:prose-base md:prose-lg xl:prose-xl prose-p:text-primary-less prose-video:m-0 prose-video:p-0 prose-img:rounded-2xl"
-		>
-			<!-- If featured video exists, move featured image to start of body -->
-			{#if casestudy.featuredVideo}
-				<Image
-					class="w-full"
-					alt={casestudy.featuredImage.alt}
-					width={casestudy.featuredImage.width}
-					height={casestudy.featuredImage.height}
-					source={casestudy.featuredImage.url}
-					sizes={{ xl: '1500px' }}
-					config={{
-						lqip: casestudy.featuredImage.base64Lqip,
-						provider: 'SANITY'
-					}}
-				/>
-			{/if}
-
-			<ArticlePortableText blocks={casestudy.body} />
-		</section>
+		</div>
 	</article>
 
 	{#if casestudy.next}
-		<aside
-			class="group relative w-full [--next-article-height:min(30vw,40vh)] h-[var(--next-article-height)]"
+		<section
+			class="relative w-full h-[min(50vh,40rem)] border-t-section border-solid border-primary bg-primary flex flex-col z-10"
 		>
-			<div
-				class="h-[calc(var(--next-article-height)_+_1.5rem)] fixed left-0 sm:left-4 bottom-[var(--article-bottom)] right-0 sm:right-4 -z-10 shadow-md rounded-b-[var(--border-radii)] overflow-hidden bg-primary group-hover:bg-accent1 transition-colors duration-200"
-			>
-				<Image
-					class="w-full min-w-full h-full object-cover object-center opacity-40"
-					alt={casestudy.next.featuredImage.alt}
-					width={casestudy.next.featuredImage.width}
-					height={casestudy.next.featuredImage.height}
-					source={casestudy.next.featuredImage.url}
-					sizes={{ xl: '1500px' }}
-					quality={40}
-					config={{
-						lqip: casestudy.next.featuredImage.base64Lqip,
-						provider: 'SANITY'
-					}}
-				/>
+			<Image
+				class="absolute w-full h-full overflow-hidden top-0 right-0 bottom-0 left-0 object-cover object-center opacity-40 -z-[1]"
+				alt={casestudy.next.featuredImage.alt}
+				width={casestudy.next.featuredImage.width}
+				height={casestudy.next.featuredImage.height}
+				source={casestudy.next.featuredImage.url}
+				sizes={{ xl: '1500px' }}
+				quality={40}
+				config={{
+					lqip: casestudy.next.featuredImage.base64Lqip,
+					provider: 'SANITY'
+				}}
+			/>
 
-				<p
-					class="absolute w-full h-full top-0 right-0 bottom-0 left-0 flex flex-col justify-center items-center text-[5vw] font-bold text-background"
-				>
-					Next Project
+			<div class="width-wide p-contentPadding text-background flex flex-col">
+				<p class="text-xl flex flex-row gap-[0.5em] leading-none items-center">
+					Next Project <Icon class="text-[1.25em]" name="arrowRight" />
 				</p>
+				<p class="text-4xl mt-[0.5em]">{casestudy.next.title}</p>
 			</div>
 
-			<Link to={casestudy.next.path} class="absolute w-full h-full top-0 right-0 bottom-0 left-0"
+			<Link class="absolute top-0 right-0 bottom-0 left-0" to={casestudy.next.path}
 				><span class="sr-only">Next Project</span></Link
 			>
-		</aside>
+		</section>
 	{/if}
-</div>
+</main>
 
 <style>
-	.content-wide {
-		@apply w-full max-w-screen-xl mx-auto;
+	.width-wide {
+		@apply w-full max-w-container mx-auto;
 	}
 
-	.content-narrow {
-		@apply w-full max-w-screen-md mx-auto;
+	.width-narrow {
+		@apply w-full max-w-container-narrow mx-auto;
 	}
 </style>

@@ -1,4 +1,9 @@
-<div class="root">
+<script lang="ts">
+	let _class = '';
+	export { _class as class };
+</script>
+
+<div class={`root ${_class}`}>
 	<div class="noise" />
 	<div class="mesh mesh-1" />
 	<!-- <div class="mesh mesh-2" /> -->
@@ -6,7 +11,7 @@
 
 <style>
 	.root {
-		@apply fixed w-full h-screen -z-10 bg-background;
+		@apply absolute top-0 right-0 bottom-0 left-0 -z-10 overflow-hidden;
 	}
 
 	.mesh {

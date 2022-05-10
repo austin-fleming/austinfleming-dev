@@ -6,11 +6,9 @@
 	import SimplePortableText from '../simple-portable-text.svelte';
 
 	const { alt, attribution, caption, url }: ImageAsset = $$props.portableText.block;
-
-	console.log({ caption });
 </script>
 
-<Image {alt} imageSource={url}>
+<Image {alt} imageSource={url} class="not-prose w-full max-w-container">
 	{#if attribution}
 		<ImageAttribution>
 			{attribution}

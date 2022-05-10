@@ -4,7 +4,9 @@ VALUE OBJECTS
 
 import { siteMetadataConfig } from '$config/site-metadata.config';
 import type { CasestudyDTO } from '../dtos/casestudy.dto';
+import type { ArticleBodyDTO } from '../dtos/fragments/article-body.dto';
 import type { Casestudy } from '../models/casestudy';
+import type { ArticleBody } from '../models/fragments/article-body';
 import type { ArticleSEO } from '../models/fragments/article-seo';
 import { authorMapper } from './author.mapper';
 import { articleBlockTextMapper } from './fragments/article-block-text.mapper';
@@ -12,6 +14,34 @@ import { simpleBlockTextMapper } from './fragments/simple-block-text.mapper';
 import { imageAssetMapper } from './image-asset.mapper';
 import { tagMappers } from './tag.mapper';
 import { videoAssetMapper } from './video-asset.mapper';
+
+const makeArticleBody = (dto: ArticleBodyDTO): ArticleBody =>
+	dto.map((data) => {
+		if (data._type === 'article_text_section') {
+			return {
+				_key: data._key,
+				_type: data._type,
+				body: articleBlockTextMapper.dtoToModel(data.body),
+				title: data.title
+			};
+		}
+
+		if (data._type === 'image_asset') {
+			return {
+				_key: data._key,
+				...imageAssetMapper.dtoToModel(data)
+			};
+		}
+
+		if (data._type === 'video_asset') {
+			return {
+				_key: data._key,
+				...videoAssetMapper.dtoToModel(data)
+			};
+		}
+
+		throw new Error(`Could not find mapper for _type "${data._type}"`);
+	});
 
 /* 
 MAPPER
@@ -33,7 +63,8 @@ const dtoToModel = (dto: CasestudyDTO): Casestudy => {
 		tags,
 		author,
 		summary,
-		short_summary
+		short_summary,
+		article_body
 	} = dto;
 
 	// TODO: where should this be determined?
@@ -73,11 +104,12 @@ const dtoToModel = (dto: CasestudyDTO): Casestudy => {
 		},
 		{
 			label: 'work',
-			to: '/case-studies'
+			to: '/#work'
 		}
 	];
 
 	const casestudy: Casestudy = {
+		articleBody: makeArticleBody(article_body),
 		authors: [authorMapper.dtoToModel(author)],
 		body: articleBlockTextMapper.dtoToModel(body),
 		breadcrumbs,

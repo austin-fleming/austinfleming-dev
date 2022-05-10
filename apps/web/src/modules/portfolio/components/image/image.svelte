@@ -3,9 +3,12 @@
 
 	export let imageSource: string;
 	export let alt: string;
+
+	let _class = '';
+	export { _class as class };
 </script>
 
-<figure>
+<figure class={`${_class}`}>
 	<img src={imageSource} {alt} class="mb-0" />
 
 	<!-- {#if $$slots.caption || $$slots.attribution} -->

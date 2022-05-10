@@ -25,10 +25,6 @@
 				<h1 class="block text-4xl lg:text-5xl md:max-w-[10ch]">
 					{casestudy.title}
 				</h1>
-
-				<!-- <span class="absolute left-0 h-full leading-none tracking-widest text-primary-lesser"
-					>{orderNumber}</span
-				> -->
 			</header>
 
 			<div class="order-2 text-xs font-bold md:order-1">
