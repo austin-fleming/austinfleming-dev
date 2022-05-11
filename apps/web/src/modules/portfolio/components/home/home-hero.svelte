@@ -25,8 +25,8 @@
 			class="absolute top-0 right-0 object-cover object-center w-1/2 h-full overflow-hidden border-solid border-l-section border-background"
 		/> -->
 
-		<div class="w-1/2 h-full border-solid border-section border-background p-contentPadding">
-			<h1 class="text-2xl font-bold leading-none text-background">© 2022 Austin Fleming</h1>
-		</div>
+		<h1 class="text-2xl font-bold leading-none text-background">© 2022 Austin Fleming</h1>
+		<!-- <div class="w-1/2 h-full border-solid border-section border-background p-contentPadding">
+		</div> -->
 	</div>
 </section>
