@@ -1,12 +1,12 @@
 <script lang="ts">
+	import Container from '$modules/common/components/container/container.svelte';
+
 	export let id: string;
-	let _class = '';
-	export { _class as class };
 </script>
 
-<section {id} class={`bg-accent1 text-background ${_class}`}>
-	<div class="p-contentPadding">
+<section {id} class={`bg-accent1 text-background ${$$props.class}`}>
+	<Container>
 		<p>👋</p>
 		<small>© 2022 Austin Fleming</small>
-	</div>
+	</Container>
 </section>

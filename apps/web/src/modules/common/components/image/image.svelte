@@ -17,9 +17,6 @@
 
 	type Config = SanityImageConfig | MuxImageConfig;
 
-	let _class = '';
-	export { _class as class };
-
 	export let sizes: Partial<Record<Breakpoints, string>> = {};
 	export let config: Config;
 	export let preload = false;
@@ -32,7 +29,7 @@
 
 {#if config.provider === 'SANITY'}
 	<SanityProvider
-		class={_class}
+		class={$$props.class}
 		{preload}
 		{alt}
 		lqip={config.lqip}
@@ -46,7 +43,7 @@
 
 {#if config.provider === 'MUX'}
 	<MuxProvider
-		class={_class}
+		class={$$props.class}
 		{preload}
 		{alt}
 		time={config.time}

@@ -1,26 +1,11 @@
 @import './vendors/vime-player.css';
-
 @import './base/base.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* TODO: import here or document head? */
 @layer base {
-	/* @font-face {
-		font-family: 'Manrope';
-		font-style: 'normal';
-		font-weight: 200 800;
-		font-display: optional;
-		src: url(/fonts/manrope-variable.woff2) format('woff2');
-	} */
-	/* @font-face {
-		font-family: 'Inter';
-		font-style: 'normal';
-		font-weight: 200 800;
-		font-display: optional;
-		src: url(/fonts/Inter.var.woff2) format('woff2');
-	} */
 	@font-face {
 		font-family: 'primary-family';
 		font-style: 'normal';
@@ -48,20 +33,6 @@
 		font-weight: 700;
 		font-display: optional;
 		src: url(/fonts/primary-700-italic.woff2) format('woff2');
-	}
-	@font-face {
-		font-family: 'primary-family';
-		font-style: 'normal';
-		font-weight: 900;
-		font-display: optional;
-		src: url(/fonts/primary-900.woff2) format('woff2');
-	}
-	@font-face {
-		font-family: 'primary-family';
-		font-style: 'italic';
-		font-weight: 900;
-		font-display: optional;
-		src: url(/fonts/primary-900-italic.woff2) format('woff2');
 	}
 }
 

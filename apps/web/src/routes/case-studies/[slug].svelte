@@ -3,12 +3,9 @@
 </script>
 
 <script lang="ts">
-	import BackgroundAnimation from '$modules/common/components/background-animation/background-animation.svelte';
-	import BreadCrumbs from '$modules/common/components/bread-crumbs/bread-crumbs.svelte';
 	import Icon from '$modules/common/components/icons/icon.svelte';
 	import Image from '$modules/common/components/image/image.svelte';
 	import Link from '$modules/common/components/link.svelte';
-	import CaseStudyHeroVideo from '$modules/portfolio/components/casestudies/case-study-hero-video.svelte';
 	import ArticlePortableText from '$modules/portfolio/components/portable-text/article-portable-text.svelte';
 	import SimplePortableText from '$modules/portfolio/components/portable-text/simple-portable-text.svelte';
 	import VideoPlayer from '$modules/portfolio/components/video-player/video-player.svelte';
@@ -42,24 +39,26 @@
 		<header
 			class="fixed top-0 right-0 left-0 h-[var(--hero-height)] min-h-[var(--hero-height)] flex flex-col justify-between text-background"
 		>
-			<Image
-				preload
-				class="w-full h-full absolute top-0 right-0 left-0 bottom-0 object-cover object-center -z-10 opacity-50"
-				alt={casestudy.featuredImage.alt}
-				width={casestudy.featuredImage.width}
-				height={casestudy.featuredImage.height}
-				source={casestudy.featuredImage.url}
-				sizes={{ xl: '1500px' }}
-				config={{
-					lqip: casestudy.featuredImage.base64Lqip,
-					provider: 'SANITY'
-				}}
-			/>
+			{#key casestudy.featuredImage.url}
+				<Image
+					preload
+					class="absolute top-0 bottom-0 left-0 right-0 object-cover object-center w-full h-full opacity-50 -z-10"
+					alt={casestudy.featuredImage.alt}
+					width={casestudy.featuredImage.width}
+					height={casestudy.featuredImage.height}
+					source={casestudy.featuredImage.url}
+					sizes={{ xl: '1500px' }}
+					config={{
+						lqip: casestudy.featuredImage.base64Lqip,
+						provider: 'SANITY'
+					}}
+				/>
+			{/key}
 			<nav
 				class="width-wide p-contentPadding flex flex-row items-center leading-none font-bold text-sm gap-[0.5em]"
 			>
 				{#each casestudy.breadcrumbs as { to, label } (to)}
-					<Link class="hover:underline transition duration-200" {to}>{label}</Link>
+					<Link class="transition duration-200 hover:underline" {to}>{label}</Link>
 					<Icon name="caretRight" />
 				{/each}
 			</nav>
@@ -81,21 +80,21 @@
 			</ul>
 		</header>
 
-		<div class="relative border-t-section border-solid border-primary bg-background">
+		<div class="relative border-solid border-t-section border-primary bg-background">
 			{#if casestudy.projectDetails}
 				<section
 					id="article-details"
 					class="width-wide p-contentPadding grid grid-cols-1 sm:grid-cols-[3fr,_2fr] md:grid-cols-2 gap-8 md:gap-24 items-baseline"
 				>
-					<div id="article-summary" class="prose prose-md sm:prose-lg md:prose-xl font-bold">
+					<div id="article-summary" class="font-bold prose prose-md sm:prose-lg md:prose-xl">
 						<SimplePortableText blocks={casestudy.summary} />
 					</div>
 
-					<div class="w-full grid grid-cols-2 sm:grid-cols-2 gap-4 items-baseline">
+					<div class="grid items-baseline w-full grid-cols-2 gap-4 sm:grid-cols-2">
 						{#each casestudy.projectDetails as { title, description } (title)}
 							<div class="flex-shrink flex-grow basis-[150px]">
-								<p class="font-bold text-sm">{title}</p>
-								<div class="prose prose-sm opacity-80">
+								<p class="text-sm font-bold">{title}</p>
+								<div class="prose-sm prose opacity-80">
 									<SimplePortableText blocks={description} />
 								</div>
 							</div>
@@ -104,10 +103,10 @@
 				</section>
 			{/if}
 
-			<section class="width-wide p-contentPadding flex flex-col gap-contentPadding">
+			<section class="flex flex-col width-wide p-contentPadding gap-contentPadding">
 				{#each casestudy.articleBody as body (body._key)}
 					{#if body._type === 'article_text_section'}
-						<div class="grid grid-cols-1 md:grid-cols-2 py-contentPadding items-baseline">
+						<div class="grid items-baseline grid-cols-1 md:grid-cols-2 py-contentPadding">
 							<h2 class="text-3xl md-4xl mb-[0.75em] md:mb-0">{body.title}</h2>
 							<div class="prose">
 								<ArticlePortableText blocks={body.body} />
@@ -151,30 +150,32 @@
 		<section
 			class="relative w-full h-[min(50vh,40rem)] border-t-section border-solid border-primary bg-primary flex flex-col z-10"
 		>
-			<Image
-				class="absolute w-full h-full overflow-hidden top-0 right-0 bottom-0 left-0 object-cover object-center opacity-40 -z-[1]"
-				alt={casestudy.next.featuredImage.alt}
-				width={casestudy.next.featuredImage.width}
-				height={casestudy.next.featuredImage.height}
-				source={casestudy.next.featuredImage.url}
-				sizes={{ xl: '1500px' }}
-				quality={40}
-				config={{
-					lqip: casestudy.next.featuredImage.base64Lqip,
-					provider: 'SANITY'
-				}}
-			/>
+			{#key casestudy.next.featuredImage.url}
+				<Image
+					class="absolute w-full h-full overflow-hidden top-0 right-0 bottom-0 left-0 object-cover object-center opacity-40 -z-[1]"
+					alt={casestudy.next.featuredImage.alt}
+					width={casestudy.next.featuredImage.width}
+					height={casestudy.next.featuredImage.height}
+					source={casestudy.next.featuredImage.url}
+					sizes={{ xl: '1500px' }}
+					quality={40}
+					config={{
+						lqip: casestudy.next.featuredImage.base64Lqip,
+						provider: 'SANITY'
+					}}
+				/>
+			{/key}
 
-			<div class="width-wide p-contentPadding text-background flex flex-col">
+			<div class="flex flex-col width-wide p-contentPadding text-background">
 				<p class="text-xl flex flex-row gap-[0.5em] leading-none items-center">
 					Next Project <Icon class="text-[1.25em]" name="arrowRight" />
 				</p>
 				<p class="text-4xl mt-[0.5em]">{casestudy.next.title}</p>
 			</div>
 
-			<Link class="absolute top-0 right-0 bottom-0 left-0" to={casestudy.next.path}
-				><span class="sr-only">Next Project</span></Link
-			>
+			<Link prefetch class="absolute top-0 bottom-0 left-0 right-0" to={casestudy.next.path}>
+				<span class="sr-only">Next Project</span>
+			</Link>
 		</section>
 	{/if}
 </main>

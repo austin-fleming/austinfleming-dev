@@ -9,9 +9,6 @@
 	// https://medium.com/front-end-weekly/html-picture-tag-in-practice-png-and-webp-formats-5a3fc51b5998
 	// https://www.smashingmagazine.com/2021/04/humble-img-element-core-web-vitals/
 
-	let _class = '';
-	export { _class as class };
-
 	export let preload = false;
 	export let lqip: string;
 	export let alt: string;
@@ -58,7 +55,7 @@
 	const jpgSource = imageSizesConfig.map(jpgBuilder).join(', ');
 </script>
 
-<div class={_class} style={`aspect-ratio: ${width} / ${height};`}>
+<div class={$$props.class} style={`aspect-ratio: ${width} / ${height};`}>
 	<picture>
 		<source type="image/webp" sizes={sizeList} srcset={webpSource} />
 		<img
@@ -68,7 +65,7 @@
 			{alt}
 			{width}
 			{height}
-			class={`bg-cover bg-center ${_class}`}
+			class={`bg-cover bg-center object-cover object-center w-full h-full`}
 			style={`background-image: url(${lqip});`}
 			loading={preload ? 'eager' : 'lazy'}
 			decoding={preload ? 'auto' : 'async'}

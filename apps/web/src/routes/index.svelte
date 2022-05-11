@@ -39,36 +39,42 @@
 	}
 </script>
 
+<!-- TODO: use SEO component -->
+<svelte:head>
+	<title>Austin Fleming</title>
+	<meta name="description" content="Web developer in San Diego, California" />
+</svelte:head>
+
 <main
-	class="absolute top-0 w-full overflow-x-hidden heightScreenFix minHeightScreenFix overflow-y-scroll flex flex-col justify-start scroll-smooth overscroll-none"
+	class="absolute top-0 flex flex-col justify-start w-full overflow-x-hidden overflow-y-scroll heightScreenFix minHeightScreenFix scroll-smooth overscroll-none"
 	bind:this={mainElement}
 >
 	<HomeHero id="hero" class="sticky top-0 w-full pb-header" />
 
-	<HomeAbout id="about" class="relative w-full border-t-section border-solid border-primary" />
+	<HomeAbout id="about" class="relative w-full border-solid border-t-section border-primary" />
 
 	<HomeCasestudiesIntro
 		id="work"
-		class="sticky top-0 border-t-section border-solid border-primary"
+		class="sticky top-0 border-solid border-t-section border-primary"
 		bind:offsetHeight={workTop}
 		bind:this={workSection}
 	/>
 
 	{#each homePage.casestudies as casestudy, index (casestudy.id)}
 		<CasestudyPreview
-			class="sticky top-header min-h-screen h-screen pb-header w-full border-t-section border-solid border-primary article-shadow md:pb-headerDouble"
+			class="sticky w-full h-screen min-h-screen border-solid top-header pb-header border-t-section border-primary article-shadow md:pb-headerDouble"
 			id={`casestudy${index}`}
 			{casestudy}
 			orderNumber={index + 1}
 		/>
 	{/each}
 
-	<HomeArchive id="archive" class="relative w-full border-t-section border-solid border-primary" />
+	<HomeArchive id="archive" class="relative w-full border-solid border-t-section border-primary" />
 
-	<HomeContact id="contact" class="sticky top-0 border-t-section border-solid border-primary" />
+	<HomeContact id="contact" class="sticky top-0 border-solid border-t-section border-primary" />
 
 	<HomeFooter
 		id="footer"
-		class="relative w-full pb-header border-t-section border-solid border-primary"
+		class="relative w-full border-solid pb-header border-t-section border-primary"
 	/>
 </main>
