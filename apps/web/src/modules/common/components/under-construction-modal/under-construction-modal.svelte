@@ -24,7 +24,7 @@
 
 {#if isOpen}
 	<aside
-		class="fixed bottom-0 right-0 max-w-full w-[40ch] z-modal p-contentPadding mb-header text-background flex flex-col items-end gap-2"
+		class="translate-x-full animate-modal fixed bottom-0 right-0 max-w-full w-[40ch] z-modal p-contentPadding mb-header text-background flex flex-col items-end gap-2"
 	>
 		<CloseButton on:click={closeModal} />
 
@@ -36,3 +36,18 @@
 		</div>
 	</aside>
 {/if}
+
+<style type="text/postcss">
+	.animate-modal {
+		@apply animate-[slideIn_0.3s_linear_0.5s_forwards];
+	}
+
+	@keyframes slideIn {
+		0% {
+			transform: translateX(100%);
+		}
+		100% {
+			transform: translateX(0%);
+		}
+	}
+</style>
