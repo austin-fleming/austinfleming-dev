@@ -72,7 +72,7 @@
 			>
 				{#each casestudy.tags as { title } (title)}
 					<li
-						class="py-[0.3em] px-[1.25em] bg-background/75 font-bold text-primary/80 rounded-[0.5em]"
+						class="py-[0.3em] px-[1.25em] bg-background font-bold text-primary/80 rounded-[0.5em]"
 					>
 						{title}
 					</li>
