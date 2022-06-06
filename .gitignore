@@ -37,6 +37,7 @@ coverage
 
 # REDIS
 *.rdb
+dump.rdb
 
 # OLD STUFF
 __deprecated__

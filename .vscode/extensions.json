@@ -4,6 +4,7 @@
     "svelte.svelte-vscode",
     "ardenivanov.svelte-intellisense",
     "bradlc.vscode-tailwindcss",
-    "austenc.tailwind-docs"
+    "austenc.tailwind-docs",
+    "golang.go"
   ]
 }
