@@ -73,10 +73,11 @@
 
 <main class="w-full bg-background pb-header">
 	<Container>
-		<h1 class="text-6xl py-[1em]">Archive</h1>
+		<h1 class="text-6xl pt-[1em]">Snippets</h1>
+		<p class="pt-[1em]">Some old, some small, and some just for fun.</p>
 	</Container>
 
-	<Container class="grid grid-cols-2 gap-0 md:grid-cols-4">
+	<Container class="grid grid-cols-2 gap-4 md:grid-cols-4">
 		{#each snippetsPage.snippets as snippet, index (snippet.id)}
 			<Snippet {snippet} />
 		{/each}

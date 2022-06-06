@@ -18,6 +18,7 @@ const makeFailureResponse = () => ({
 
 export const get: RequestHandler<Parameters, Output> = async () => {
 	const maybeSnippetsPage = await pageService.getSnippetsPage();
+	const maybe
 
 	return maybeSnippetsPage.match(makeSuccessResponse, makeFailureResponse);
 };
