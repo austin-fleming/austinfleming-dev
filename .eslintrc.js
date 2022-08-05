@@ -50,7 +50,8 @@ module.exports = {
       "error",
       {
         "allowList": {
-          "fn": true
+          "fn": true,
+          "props": true
         }
       }
     ]

@@ -17,10 +17,14 @@
     "editor.formatOnSave": true,
   },
   "cSpell.words": [
+    "Blocktext",
     "casestudies",
     "Casestudy",
     "cloin",
+    "Datetime",
+    "Exif",
     "Falsyable",
+    "Lqip",
     "Postgrest",
     "sonarjs",
     "supabase",
@@ -33,5 +37,8 @@
   ],
   "[sql]": {
     "editor.defaultFormatter": "bradymholt.pgformatter"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
   }
 }
